@@ -6,10 +6,10 @@
 public abstract class Product implements Comparable<Product>{
     private String name;
     private String UID;
-    private String singer;//product id
-    private double duration;//unit price
-    private String genre;//description
-    private String release_year;//manufacture
+    private String singer;
+    private double duration;
+    private String genre;
+    private String release_year;
     private double cost;
     private int numInStock;
 
