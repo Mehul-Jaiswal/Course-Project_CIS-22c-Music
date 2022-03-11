@@ -1,3 +1,8 @@
+/**
+ * CompareByName.java
+ * @author Mehul Jaiswal
+ * CIS 22C, course project Team 1
+ */
 import java.util.Comparator;
 
 public class CompareByName implements Comparator<Product>{
