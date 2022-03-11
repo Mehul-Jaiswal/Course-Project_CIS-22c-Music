@@ -3,13 +3,13 @@
  * @author Mehul Jaiswal
  * CIS 22C, course project Team 1
  */
-public abstract class Product implements Comparable<Product>{
+public class Product {
     private String name;
     private String UID;
-    private String singer;
-    private double duration;
-    private String genre;
-    private String release_year;
+    private String singer;//product id
+    private double duration;//unit price
+    private String genre;//description
+    private String release_year;//manufacture
     private double cost;
     private int numInStock;
 
@@ -183,34 +183,34 @@ public abstract class Product implements Comparable<Product>{
         return ((Product)o).getName().equals(name);
     }
 
-    /**
-     * Compares two Product objects to determine ordering
-     * Returns 0 if the two items are equal
-     * Return -1 if this Product's name comes alphabetically
-     * before the other Product's name.
-     * Returns 1 if the other Product's name comes
-     * alphabetically before this Product's name
-     * If the two Product's names are the same, will
-     * differentiate by product's productIds (alphabetical
-     * comparison)
-     * @param the other Product object to compare to this
-     * @return 0 (same Product), -1 (this Product ordered first)
-     * or 1 (the other Product ordered first)
-     */
-    public int compare(Product p2) {
-        if (this.equals(p2))
-            return 0;
-        else if (name.compareTo(p2.getName()) > 0)
-            return 1;
-        else if (name.compareTo(p2.getName()) < 0)
-            return -1;
-        else {
-            if (UID.compareTo(p2.getUID()) < 0)
-                return -1;
-            else
-                return 1;
-        }
-    }
+//    /**
+//     * Compares two Product objects to determine ordering
+//     * Returns 0 if the two items are equal
+//     * Return -1 if this Product's name comes alphabetically
+//     * before the other Product's name.
+//     * Returns 1 if the other Product's name comes
+//     * alphabetically before this Product's name
+//     * If the two Product's names are the same, will
+//     * differentiate by product's productIds (alphabetical
+//     * comparison)
+//     * @param the other Product object to compare to this
+//     * @return 0 (same Product), -1 (this Product ordered first)
+//     * or 1 (the other Product ordered first)
+//     */
+//    public int compareTo(Product p2) {
+//        if (this.equals(p2))
+//            return 0;
+//        else if (name.compareTo(p2.getName()) > 0)
+//            return 1;
+//        else if (name.compareTo(p2.getName()) < 0)
+//            return -1;
+//        else {
+//            if (UID.compareTo(p2.getUID()) < 0)
+//                return -1;
+//            else
+//                return 1;
+//        }
+//    }
 
     /**
      * Returns a consistent hash code for
