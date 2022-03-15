@@ -203,19 +203,19 @@ public class Heap<T> {
 	}
 
 	/**
-	 * returns the index of the element given
+	 * returns the whole object associated with the given data and comparator
 	 * 
-	 * @param data the element searched for
-	 * @return int index of element location
+	 * @param data the data associated with the object
+	 * @return the object associated with the data
 	 */
-	public int search(T data, Comparator<T> comparator) {
+	public T search(T data, Comparator<T> comparator) {
 
 		for(int i = 1; i <= heapSize; i++) {
 			if(comparator.compare(data, heap.get(i)) == 0) {
-				return i;
+				return heap.get(i);
 			}
 		}
-		return -1;
+		return null;
 
 	}
 
