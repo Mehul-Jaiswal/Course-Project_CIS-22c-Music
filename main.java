@@ -10,7 +10,7 @@ public class main {
 	static Heap<Order> priorityQueue = new Heap<Order>(data, compareByPriority); 
 	//need to read: Order information from File (data), and need the comparator class
 
-	public static void maintesting(String[] args) {
+	public static void main(String[] args) {
 		
 		
 		
