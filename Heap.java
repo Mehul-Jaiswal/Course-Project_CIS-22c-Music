@@ -1,5 +1,7 @@
 
+
 /**
+ * Heap.java
  * @author Ananya Batra
  * @author Bence Danko
  * Final Project
@@ -23,6 +25,7 @@ public class Heap<T> {
 	public Heap(ArrayList<T> data, Comparator<T> comparator) {
 		heapSize = data.size();
 		heap = data;
+		heap.add(0, null);
 		buildHeap(comparator);
 	}
 
@@ -41,7 +44,7 @@ public class Heap<T> {
 //
 //    	    Max-Heapify(A, i) //call Max-Heapify helper function
 
-		for (int i = heapSize / 2; i > 0; i++) { // check
+		for (int i = heapSize / 2; i >= 1; i--) { // check
 			heapify(i, comparator);
 		}
 	}
@@ -85,15 +88,16 @@ public class Heap<T> {
 			throw new IndexOutOfBoundsException("heapify: index out of bounds");
 		}
 
-		int indexOfMax = -1;
+		int indexOfMax = index;
 		int l = 2 * index;
 		int r = 2 * index + 1;
 
-		if (l <= heapSize && comparator.compare(heap.get(l), heap.get(index)) > 0) { // we need the comparator here?
+		
+		if (l < heapSize && comparator.compare(heap.get(l), heap.get(index)) > 0) { // we need the comparator here?
 			indexOfMax = l;
 		}
 
-		if (l <= heapSize && comparator.compare(heap.get(r), heap.get(indexOfMax)) > 0) { // we need the comparator
+		if (r < heapSize && comparator.compare(heap.get(r), heap.get(indexOfMax)) > 0) { // we need the comparator
 																							// here?
 			indexOfMax = r;
 		}
@@ -123,8 +127,9 @@ public class Heap<T> {
 //       HeapIncreaseKey(A, Heap_size(A), key) //start at the last index, i=Heap_size(A)
 
 		heapSize++;
+		heap.add(key);
 		heapIncreaseKey(heapSize, key, comparator);
-
+		
 	}
 
 	/**
@@ -177,7 +182,7 @@ public class Heap<T> {
 		}
 
 		heap.set(index, heap.get(heapSize));
-		heap.remove(heapSize);
+		heap.remove(heapSize - 1);
 		heapify(index, comparator);
 		heapSize--;
 	}
@@ -260,10 +265,10 @@ public class Heap<T> {
 	 */
 	public int getRight(int index) throws IndexOutOfBoundsException {
 		
-		int result = (2 * index + 1);
+		int result = (2 * index) + 1;
 		
 		if (index < 1 || result > heapSize) {
-			throw new IndexOutOfBoundsException("getLeft(): Index is out of bounds");
+			throw new IndexOutOfBoundsException("getRight(): Index is out of bounds");
 		}
 		
 		
@@ -301,7 +306,11 @@ public class Heap<T> {
 	 */
 	@Override
 	public String toString() {
-		return heap.toString();
+		StringBuilder result = new StringBuilder();
+		for (int i = 1; i <= heapSize; i++) {
+		     result.append(heap.get(i) + " ");
+	    }
+		return result.toString();
 	}
 
 	/**
@@ -325,6 +334,7 @@ public class Heap<T> {
 //
 //            Max-Heapify(A,1) //restore max heap property
 		Heap<T> result = new Heap<T>(heap, comparator);
+		result.heapSize--;
 
 		for (int i = heapSize; i >= 2; i--) {
 			T temp = result.heap.get(1);
