@@ -1,3 +1,10 @@
+/**
+ * Order.java
+ * @author Ananya Batra
+ * @author Bence Danko
+ * Course Project
+ */
+
 //Orders are added to the heap
 
 //overnight shipping 1?
@@ -12,13 +19,8 @@
 import java.util.Comparator;
 import java.util.LinkedList;
 
-import Customer;
-import Product;
-
 
 public class Order {
-
- 
 
 	private int orderID;
 	private Customer customer;
@@ -26,6 +28,7 @@ public class Order {
 	private LinkedList<Product> orderContents; //fill in Product based on your own product class
 	private int shippingSpeed; //or use enums
 	private int priority; 
+	private int startYear = 2022;
 
     
 
@@ -42,17 +45,16 @@ public class Order {
 	 * @param shippingSpeed decided by customer
 	 * @param priority for the heap 
 	 */
-	public Order(int orderID, Customer costumer, String date, LinkedList<Product> orderContents,
-			int shippingSpeed, int priority) {
+	public Order(int orderID, Customer customer, String date, LinkedList<Product> contents,
+			int shippingSpeed) {
 		
 		this.orderID = orderID;
 		this.customer = customer;
 		this.date = date;
-		this.orderContents<Product> = orderContents;
+		orderContents = new LinkedList<Product>(contents);
 		this.shippingSpeed = shippingSpeed;
-		
-		
-		this.priority = priority;
+
+		priority = 100 - shippingSpeed - setDateInt(date);
 		
 	}
 
@@ -135,6 +137,17 @@ public class Order {
 		this.date = date;
 	}
 	
+	public int setDateInt(String date) {
+		String[] splitArray = date.split("-"); // "03-15-2022"
+		int month = Integer.parseInt(splitArray[0]);
+		int day = Integer.parseInt(splitArray[1]);
+		int year = Integer.parseInt(splitArray[2]);
+		
+		
+		int result = (startYear - year)*365 + month*30 + day;
+		return result;
+	}
+	
 	/**
 	 * set the contents of the order
 	 * @param orderContents of the order
@@ -163,42 +176,32 @@ public class Order {
 
 //*****************COMPARATORS********************
  
-public class priorityComparator implements Comparator<Order> {
+//public class priorityComparator implements Comparator<Order> {
+//
+//	public int compare(Order arg0, Order arg1) {
+//		return arg0.priority - arg1.priority;
+//	}
+//	
+//	public boolean equals(Object o) {
+//		if (o == this) {
+//	        return true;
+//	    } else if (!(o instanceof Order)) {
+//	        return false;
+//	    } else { // now safe to cast
+//	        Order p = (Order) o;
+//	        return priority == p.priority;         
+//	    }
+//	}
+//	
+//}
+
+
+
+public class priorityComparator1 implements Comparator<Order> {
 
 	public int compare(Order arg0, Order arg1) {
-		return arg0.priority - arg1.priority;
+		return Integer.compare(arg0.getPriority(),arg1.getPriority());
 	}
-	
-	public boolean equals(Object o) {
-		if (o == this) {
-	        return true;
-	    } else if (!(o instanceof Order)) {
-	        return false;
-	    } else { // now safe to cast
-	        Order p = (Order) o;
-	        return priority == p.priority;         
-	    }
-	}
-	
-}
-
-public class customerNameComparator implements Comparator<Order> {
-
-	public int compare(Order arg0, Order arg1) {
-		return String.compare(arg0.customer.getName(),arg1.customer.getName());
-	}
-	
-	public boolean equals(Object o) {
-		if (o == this) {
-	        return true;
-	    } else if (!(o instanceof Order)) {
-	        return false;
-	    } else { // now safe to cast
-	        Order p = (Order) o;
-	        return customer.getName().equals(p.customer.getName());         
-	    }
-	}
-	
 }
 
 public class orderIDComparator implements Comparator<Order> {
