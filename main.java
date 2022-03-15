@@ -1,4 +1,8 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class main {
 
 	
@@ -122,6 +126,29 @@ public class main {
 		 
 
 		
+	}
+	
+	/**
+	* Save Customer, Employee
+	*/ 
+	public void writeCustomerLoginFile() {
+		
+	}
+	
+	/**
+	* 
+	*/
+	public void writeManagerLoginFile() {
+		
+	}
+	
+	/**
+	* 
+	*/
+	public void writeOrdersFile() throws FileNotFoundException {
+		for (int i = 2; i <= priorityQueue.heapSize(); i++) {
+			
+		}
 	}
 
 }
