@@ -7,7 +7,7 @@ public class main {
 	static HashTable<Customer> customerTable = new HashTable<>(10);
 	static HashTable<Employee> employeeTable = new HashTable<>(10);
 	
-	static Heap<Order> priorityQueue = new Heap<Order>(data, compareByPriority); 
+	static Heap<Order> priorityQueue = new Heap<Order>(data, priorityComparator1); 
 	//need to read: Order information from File (data), and need the comparator class
 
 	public static void main(String[] args) {
