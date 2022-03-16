@@ -1,6 +1,5 @@
 
 
-
 /**
  * Heap.java
  * @author Ananya Batra
@@ -38,7 +37,7 @@ public class Heap<T> {
 	 */
 	public void buildHeap(Comparator<T> comparator) {
 		for (int i = heapSize / 2; i >= 1; i--) { // check
-			
+
 			heapify(i, comparator);
 		}
 	}
@@ -51,7 +50,6 @@ public class Heap<T> {
 	 */
 	private void heapify(int index, Comparator<T> comparator) throws IndexOutOfBoundsException {
 
-
 		if (index < 1 || index > heapSize) {
 			throw new IndexOutOfBoundsException("heapify: index out of bounds");
 		}
@@ -60,12 +58,12 @@ public class Heap<T> {
 		int l = 2 * index;
 		int r = 2 * index + 1;
 
-		
 		if (l < heapSize && comparator.compare(heap.get(l), heap.get(index)) > 0) { // we need the comparator here?
 			indexOfMax = l;
 		}
 
-		if (r < heapSize && comparator.compare(heap.get(r), heap.get(indexOfMax)) > 0) { // we need the comparator																				// here?
+		if (r < heapSize && comparator.compare(heap.get(r), heap.get(indexOfMax)) > 0) { // we need the comparator //
+																							// here?
 			indexOfMax = r;
 		}
 
@@ -86,17 +84,10 @@ public class Heap<T> {
 	 * @param key the data to insert
 	 */
 	public void insert(T key, Comparator<T> comparator) {
-//    	HeapInsert(A, key)
-//        Heap_size(A)++ //adding a new value to the heap
-//
-//        A[Heap_size(A)] = – //make space at end of array for new value
-//
-//       HeapIncreaseKey(A, Heap_size(A), key) //start at the last index, i=Heap_size(A)
-
 		heapSize++;
 		heap.add(key);
 		heapIncreaseKey(heapSize - 1, key, comparator);
-		
+
 	}
 
 	/**
@@ -107,8 +98,6 @@ public class Heap<T> {
 	 * @precondition
 	 */
 	private void heapIncreaseKey(int index, T key, Comparator<T> comparator) throws IndexOutOfBoundsException {
-
-
 
 		if (comparator.compare(key, heap.get(index)) > 0) {
 			heap.set(index, key);
@@ -136,7 +125,7 @@ public class Heap<T> {
 			throw new IndexOutOfBoundsException("remove: index out of bounds");
 		}
 
-		heap.set(index, heap.get(heapSize-1));
+		heap.set(index, heap.get(heapSize - 1));
 		heap.remove(heapSize - 1);
 		heapify(index, comparator);
 		heapSize--;
@@ -165,8 +154,8 @@ public class Heap<T> {
 	 */
 	public T search(T data, Comparator<T> comparator) {
 
-		for(int i = 1; i < heapSize; i++) {
-			if(comparator.compare(data, heap.get(i)) == 0) {
+		for (int i = 1; i < heapSize; i++) {
+			if (comparator.compare(data, heap.get(i)) == 0) {
 				return heap.get(i);
 			}
 		}
@@ -198,14 +187,13 @@ public class Heap<T> {
 	 * @precondition 1 <= index <= heapSize
 	 * @throws IndexOutOfBoundsException
 	 */
-	public int getLeft(int index) throws IndexOutOfBoundsException {	
+	public int getLeft(int index) throws IndexOutOfBoundsException {
 		int result = (2 * index);
-		
+
 		if (index < 1 || result > heapSize) {
 			throw new IndexOutOfBoundsException("getLeft(): Index is out of bounds");
 		}
-		
-		
+
 		return result;
 	}
 
@@ -219,14 +207,13 @@ public class Heap<T> {
 	 * @throws IndexOutOfBoundsException
 	 */
 	public int getRight(int index) throws IndexOutOfBoundsException {
-		
+
 		int result = (2 * index) + 1;
-		
+
 		if (index < 1 || result > heapSize) {
 			throw new IndexOutOfBoundsException("getRight(): Index is out of bounds");
 		}
-		
-		
+
 		return result;
 	}
 
@@ -263,8 +250,8 @@ public class Heap<T> {
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		for (int i = 1; i < heapSize; i++) {
-		     result.append(heap.get(i) + " ");
-	    }
+			result.append(heap.get(i) + " ");
+		}
 		return result.toString();
 	}
 
