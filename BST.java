@@ -6,6 +6,7 @@
  */
 import java.util.NoSuchElementException;
 import java.util.ArrayList;
+import java.util.Comparator;
 //import java.util.Comparator;
 
 @SuppressWarnings("hiding")
@@ -314,11 +315,11 @@ public class BST<Product> {
 	 * @param data the value to search for
 	 * @return whether the value is stored in the tree
 	 */
-	public Product searchByName(Product data) {
+	public Product searchByName(Product data, Comparator<Product> comparator) {
 		if (isEmpty())
 			return null;
 		else
-			return searchByName(data, root);
+			return searchByName(data, root, comparator);
 	}
 
 	/**
@@ -328,22 +329,22 @@ public class BST<Product> {
 	 * @param node the current node to check
 	 * @return whether the data is stored in the tree
 	 */
-	private Product searchByName(Product data, Node node) {
+	private Product searchByName(Product data, Node node, Comparator<Product> comparator) {
 		// Product ob = new Product(" "," "," ",0.0,0.0," "," ",0);
-		CompareByName ob = new CompareByName();
-		int x = ob.compare(data, node.data);
+		//CompareByName ob = new CompareByName();
+		int x = comparator.compare(data, node.data);
 		if (x == 0)
 			return node.data;
 		if (x < 0) {
 			if (node.left == null)
 				return null;
 			else
-				return searchByName(data, node.left);
+				return searchByName(data, node.left, comparator);
 		} else {
 			if (node.right == null)
 				return null;
 			else
-				return searchByName(data, node.right);
+				return searchByName(data, node.right, comparator);
 		}
 	}
 
@@ -353,11 +354,11 @@ public class BST<Product> {
 	 * @param data the value to search for
 	 * @return whether the value is stored in the tree
 	 */
-	public Product searchByUID(Product data) {
+	public Product searchByUID(Product data, Comparator<Product> comparator) {
 		if (isEmpty())
 			return null;
 		else
-			return searchByUID(data, root);
+			return searchByUID(data, root, comparator);
 	}
 
 	/**
@@ -367,21 +368,21 @@ public class BST<Product> {
 	 * @param node the current node to check
 	 * @return whether the data is stored in the tree
 	 */
-	private Product searchByUID(Product data, Node node) {
-		CompareByID ob = new CompareByID();
-		int x = ob.compare(data, node.data);
+	private Product searchByUID(Product data, Node node, Comparator<Product> comparator) {
+		//CompareByID ob = new CompareByID();
+		int x = comparator.compare(data, node.data);
 		if (x == 0)
 			return node.data;
 		if (x < 0) {
 			if (node.left == null)
 				return null;
 			else
-				return searchByUID(data, node.left);
+				return searchByUID(data, node.left, comparator);
 		} else {
 			if (node.right == null)
 				return null;
 			else
-				return searchByUID(data, node.right);
+				return searchByUID(data, node.right, comparator);
 		}
 	}
 
@@ -420,6 +421,7 @@ public class BST<Product> {
 	/*** ADDITIONAL OPERATIONS ***/
 
 	public void sortByPrimary() {
+
 		list.clear();
 		inOrderString();
 	}
