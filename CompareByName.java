@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 public class CompareByName implements Comparator<Product>{
 	/**
-     * Compares two Product objects by primary key - name to determine ordering
+     * Compares two Product objects by primary key to determine ordering
      * Returns 0 if the two items are equal
      * Return -1 if this Product's name comes alphabetically
      * before the other Product's name.
@@ -18,12 +18,10 @@ public class CompareByName implements Comparator<Product>{
      * or 1 (the other Product ordered first)
      */
 	@Override
-    public int compare(Product p1, Product p2) {
-        if (p1.getName().compareTo(p2.getName()) == 0)
-            return 0;
-        else if ((p1.getName()).compareTo(p2.getName()) < 0)
-            return -1;
-        else // if (p1.getName()).compareTo(p2.getName()) > 0)
-            return 1;
+    public int compare(Product data, Product data2) {
+		Product s1=(Product)data;  
+		Product s2=(Product)data2;
+		return s1.getName().compareToIgnoreCase(s2.getName());
     }
 }
+
