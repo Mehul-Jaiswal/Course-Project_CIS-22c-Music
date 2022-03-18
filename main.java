@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.InputMismatchException;
 
-class Main {
+class main {
 
   static HashTable<Customer> customerTable = new HashTable<>(100);
 	static HashTable<Employee> employeeTable = new HashTable<>(100);
@@ -223,7 +223,7 @@ class Main {
             int numInStock = input.nextInt();
             input.nextLine();
 
-            Product newProduct = Product(name, UID, singer, cost, duration, release_year, genre, numInStock)
+            Product newProduct = Product(name, UID, singer, cost, duration, release_year, genre, numInStock);
 
           //add product to the catalogue
             
@@ -279,8 +279,15 @@ class Main {
       
       for (int i = 0; i < priorityOrders.size(); i++) {
         fileWriter.println(priorityOrders.get(i).getOrderID());
-        fileWriter.println(priorityOrders.get(i).getOrderID())
-		
+        fileWriter.println(priorityOrders.get(i).getCustomer().getName());
+        fileWriter.println(priorityOrders.get(i).getDate());
+        fileWriter.println(priorityOrders.orderContents.size()); //amount of orders
+        for (int i = 0; i < priorityOrders.orderContents.size(); i++) {
+          fileWriter.println(priorityOrders.orderContents.get(i).getName());
+        }
+        fileWriter.println(priorityOrders.get(i).shippingSpeed());
+        fileWriter.println(priorityOrders.get(i).priority());
+        fileWriter.close();
       }
 	  
       } catch (FileNotFoundException e) {
@@ -295,8 +302,37 @@ class Main {
       File in new File("orders.txt");
       Scanner fileReader = new Scanner(in);
 
-    
+    while(fileReader.hasNext()) {
+
+      LinkedList<Product> orderContents = new LinkedList<Product>();
       
+      String orderID = fileReader.nextLine();
+      String customerName = fileReader.nextLine();
+
+      Customer customer = customerTable // how to get customer from name?
+      
+      String date = fileReader.nextLine();
+      String amountOfOrders = fileReader.nextLine();
+      int amountOfOrdersInt = Integer.parse(amountOfOrders);
+      for (int i = 0; i < amountOfOrdersInt; i++) {
+        String productName = fileReader.nextLine();
+        orderContents.addLast( .find() ) //ADD PRODUCT BASED ON PRODUCT BST w/ NMAE
+      } 
+      String shippingSpeed = fileReader.nextLine();
+      String priority = fileReader.nextLine();
+
+      
+
+      Order readOrder = new Order(Integer.parseInt(orderID), customerName, date, amount )
+      
+      priorityQueue.insert(readOrder);
+      
+    }
+
+      fileReader.close();
+      
+    } catch (FileNotFoundException e) {
+      System.out.println("File orders.txt not found in folder");
     }
   }
 
