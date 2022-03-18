@@ -180,7 +180,14 @@ public class Product {
      */
     @Override 
     public boolean equals(Object o) {
-        return ((Product)o).getName().equals(name);
+        if (o == this) {
+			return true;
+		} else if (!(o instanceof Product)) {
+			return false;
+		} else { 
+			Product p = (Product) o; 
+			return ((Product) p).getName().equals(name);
+		}
     }
 
 //    /**
