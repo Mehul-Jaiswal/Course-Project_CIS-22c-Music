@@ -21,12 +21,10 @@ public static BST<Product> readfile()
 		boolean readable = true;
 		BufferedReader buff;
 		FileReader filereader;
-
 		try {
 			filereader = new FileReader("/Users/mehuljaiswal/eclipse-workspace/Course_project_cis22c/src/products.txt");
 			buff = new BufferedReader(filereader);
 			String line;
-
 			while (readable) {
 				BST<Product> products = new BST<Product>();
 				line = buff.readLine();
@@ -34,8 +32,12 @@ public static BST<Product> readfile()
 				{
 					readable = false;
 					break;
+				} else {
+					String[] words = line.split(",");
+					for (int i = 0; i < words.size; i++) {
+						products.insert(words[i]);
+					}
 				}
-				
 				
 			}
 			buff.close();
