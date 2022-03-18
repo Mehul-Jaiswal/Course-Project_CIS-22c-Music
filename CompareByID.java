@@ -17,12 +17,10 @@ public class CompareByID implements Comparator<Product>{
      * @return 0 (same Product), -1 (this Product ordered first)
      * or 1 (the other Product ordered first)
      */
+	@Override
     public int compare(Product p1, Product p2) {
-        if (p1.getUID().compareTo(p2.getUID()) == 0)
-            return 0;
-        else if (p1.getUID().compareTo(p2.getUID()) < 0)
-            return -1;
-        else //(p1.getUID().compareTo(p2.getUID()) > 0)
-            return 1;
+	Product s1=(Product)p1;  
+	Product s2=(Product)p2;
+    	return s1.getUID().compareTo(s2.getUID());
 	}
 }
