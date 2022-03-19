@@ -2,12 +2,12 @@
 /**
  * BST.java
  * @author Mehul Jaiswal
- * CIS 22C Lab 4
+ * @author Brandon Lee
+ * CIS 22C Final Course Project
  */
 import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.Comparator;
-//import java.util.Comparator;
 
 @SuppressWarnings("hiding")
 public class BST<Product> {
@@ -57,7 +57,7 @@ public class BST<Product> {
 		if (node == null) {
 			return;
 		}
-		insert(node.data);
+		insert((String) node.data);
 		copyHelper(node.left);
 		copyHelper(node.right);
 	}
@@ -190,9 +190,9 @@ public class BST<Product> {
 	/**
 	 * Inserts a new node in the tree
 	 * 
-	 * @param data the data to insert
+	 * @param vertices the data to insert
 	 */
-	public void insert(Product data) {
+	public void insert(String data) {
 		insert(data, root);
 	}
 
@@ -203,19 +203,20 @@ public class BST<Product> {
 	 * @param node the current node in the search for the correct location in which
 	 *             to insert
 	 */
-	private void insert(Product data, Node node) {
+	@SuppressWarnings("unchecked")
+	void insert(String data, Node node) {
 		if (isEmpty()) {
-			root = new Node(data);
+			root = new Node((Product) data);
 		} else {
 			if (((String) node.data).compareTo((String) data) < 0) {
 				if (node.right == null) {
-					node.right = new Node(data);
+					node.right = new Node((Product) data);
 				} else {
 					insert(data, node.right);
 				}
 			} else {
 				if (node.left == null) {
-					node.left = new Node(data);
+					node.left = new Node((Product) data);
 				} else {
 					insert(data, node.left);
 				}
@@ -312,14 +313,14 @@ public class BST<Product> {
 	/**
 	 * Searches for a specified value in the tree
 	 * 
-	 * @param data the value to search for
+	 * @param input_name the value to search for
 	 * @return whether the value is stored in the tree
 	 */
-	public Product searchByName(Product data, Comparator<Product> comparator) {
+	public Product searchByName(String input_name, Comparator<Product> comparator) {
 		if (isEmpty())
 			return null;
 		else
-			return searchByName(data, root, comparator);
+			return searchByName(input_name, root, comparator);
 	}
 
 	/**
@@ -329,10 +330,11 @@ public class BST<Product> {
 	 * @param node the current node to check
 	 * @return whether the data is stored in the tree
 	 */
-	private Product searchByName(Product data, Node node, Comparator<Product> comparator) {
+	@SuppressWarnings("unchecked")
+	private Product searchByName(String data, Node node, Comparator<Product> comparator) {
 		// Product ob = new Product(" "," "," ",0.0,0.0," "," ",0);
-		//CompareByName ob = new CompareByName();
-		int x = comparator.compare(data, node.data);
+		// CompareByName ob = new CompareByName();
+		int x = comparator.compare((Product) data, node.data);
 		if (x == 0)
 			return node.data;
 		if (x < 0) {
@@ -354,7 +356,7 @@ public class BST<Product> {
 	 * @param data the value to search for
 	 * @return whether the value is stored in the tree
 	 */
-	public Product searchByUID(Product data, Comparator<Product> comparator) {
+	public Product searchByUID(String data, Comparator<Product> comparator) {
 		if (isEmpty())
 			return null;
 		else
@@ -368,9 +370,10 @@ public class BST<Product> {
 	 * @param node the current node to check
 	 * @return whether the data is stored in the tree
 	 */
-	private Product searchByUID(Product data, Node node, Comparator<Product> comparator) {
-		//CompareByID ob = new CompareByID();
-		int x = comparator.compare(data, node.data);
+	@SuppressWarnings("unchecked")
+	private Product searchByUID(String data, Node node, Comparator<Product> comparator) {
+		// CompareByID ob = new CompareByID();
+		int x = comparator.compare((Product) data, node.data);
 		if (x == 0)
 			return node.data;
 		if (x < 0) {
@@ -386,106 +389,23 @@ public class BST<Product> {
 		}
 	}
 
-//	/**
-//	 * Determines whether two trees store identical data in the same structural
-//	 * position in the tree
-//	 * 
-//	 * @param o another Object
-//	 * @return whether the two trees are equal
-//	 */
-//	@SuppressWarnings({ "unchecked", "rawtypes" })
-//	@Override
-//	public boolean equals(Object o) {
-//		return equals(root, ((BST) o).root);
-//	}
-//
-//	/**
-//	 * Helper method for the equals method
-//	 * 
-//	 * @param node1 the node of the first bst
-//	 * @param node2 the node of the second bst
-//	 * @return whether the two trees contain identical data stored in the same
-//	 *         structural position inside the trees
-//	 */
-//	private boolean equals(Node node1, Node node2) {
-//		if (node1 == null && node2 == null)
-//			return true;
-//
-//		if (node1 != null && node2 != null) {
-//			return ((node1.data == node2.data) && equals(node1.left, node2.left) && equals(node1.right, node2.right));
-//		}
-//
-//		return false;
-//	}
-
-	/*** ADDITIONAL OPERATIONS ***/
+	/***
+	 * ADDITIONAL OPERATIONS
+	 * 
+	 * @return
+	 ***/
 
 	public void sortByPrimary() {
-
 		list.clear();
 		inOrderString();
-	}
 
-//    private void bubblesortByPrimary(){
-//        int i, j;
-//        Product temp;
-//        int n = list.size();
-//        boolean swapped;
-//        for (i = 0; i < n - 1; i++)
-//        {
-//            swapped = false;
-//            for (j = 0; j < n - i - 1; j++)
-//            {
-//                if (compare(list.get(j),list.get(j + 1)) > 0)
-//                {
-//                    // swap arr[j] and arr[j+1]
-//                    temp = list.get(j);
-//                    list.set(j, list.get(j + 1));
-//                    list.set(j + 1, temp);
-//                    swapped = true;
-//                }
-//            }
-//
-//            // If no two elements were
-//            // swapped by inner loop, then break
-//            if (swapped == false)
-//                break;
-//        }
-//    }
+	}
 
 	public void sortBySecondary() {
 		list.clear();
 		inOrderString();
-		// bubblesortBySecondary();
 	}
 
-//    private void bubblesortBySecondary()
-//    {
-//        int i, j;
-//        Product temp;
-//        int n = list.size();
-//        boolean swapped;
-//        for (i = 0; i < n - 1; i++)
-//        {
-//            swapped = false;
-//            for (j = 0; j < n - i - 1; j++)
-//            {
-//                if (compare(list.get(j),list.get(j + 1)) > 0)
-//                {
-//                    // swap arr[j] and arr[j+1]
-//                    temp = list.get(j);
-//                    list.set(j, list.get(j + 1));
-//                    list.set(j + 1, temp);
-//                    swapped = true;
-//                }
-//            }
-//
-//            // IF no two elements were
-//            // swapped by inner loop, then break
-//            if (swapped == false)
-//                break;
-//        }
-//    }
 	// ************Strings************
 	/**
 	 * Returns a String containing the data in post order
@@ -535,7 +455,7 @@ public class BST<Product> {
 			return;
 		}
 		inOrderString(node.left, inOrder);
-		inOrder.append(node.data + " ");
+		inOrder.append(node.data + "\n ");
 		list.add(node.data);
 		inOrderString(node.right, inOrder);
 	}
