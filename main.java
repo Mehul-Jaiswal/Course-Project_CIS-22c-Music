@@ -259,24 +259,22 @@ class main {
           
           } else if (userInput == "2") {
             System.out.println("Please Enter the Product ID to Search");
-            String input_id = input.nextLine();
-            Product search_output2 = products_id.searchByName(input_id, new CompareByName());
+            Double in = sc.nextDouble();
+            Product search_output2 = products_id.searchByID(new Product(in), new CompareByID());
             
-            if(search_output2!=null){
-              System.out.println("Please Enter the Product ID to Search");
-        			Double in = sc.nextDouble();
-        			Product search_output2 = products_id.searchByID(new Product(in), new CompareByID());
-        			if (search_output2 != null) {
-        				System.out.println("Product name: " + search_output2.getName());
-        				System.out.println("Product ID: " + search_output2.getUID());
-        				System.out.println("Product Singer: " + search_output2.getSinger());
-        				System.out.println("Product Duration: " + search_output2.getDuration());
-        				System.out.println("Product Genre: " + search_output2.getGenre());
-        				System.out.println("Product Release Year: " + search_output2.getReleaseYear());
-        				System.out.println("Product Cost: $" + search_output2.getCost());
-        			} else {
-        				System.out.println("There are no Products with this ID.");
-        			}
+      
+
+		if (search_output2 != null) {
+			System.out.println("Product name: " + search_output2.getName());
+			System.out.println("Product ID: " + search_output2.getUID());
+			System.out.println("Product Singer: " + search_output2.getSinger());
+			System.out.println("Product Duration: " + search_output2.getDuration());
+			System.out.println("Product Genre: " + search_output2.getGenre());
+			System.out.println("Product Release Year: " + search_output2.getReleaseYear());
+			System.out.println("Product Cost: $" + search_output2.getCost());
+		} else {
+			System.out.println("There are no Products with this ID.");
+		}
           } else if(userInput == "3"){
         	  products_name.sortByPrimary(new CompareByName());
 			      System.out.println(products_name.inOrderString().toString() + "\n");
