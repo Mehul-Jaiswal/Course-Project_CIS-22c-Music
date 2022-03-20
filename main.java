@@ -466,12 +466,12 @@ class main {
 				toUpdate.setNuminStock(no);
 			}
 		} else if (managerMenuOnline && userInput == "8") {
-			System.out.println("Enter the product name you would like to remove: ");
-			double in = input.nextDouble();
+			System.out.println("Enter the product id you would like to remove: ");
+			String in = sc.next();
 
-			Product toRemove = products_name.searchByID(new Product(in), new CompareByID());
+			Product toRemove = products_name.searchByName(new Product(in), new CompareByName());
 			if (toRemove != null) {
-				products_name.remove(toRemove, new CompareByID());
+				products_name.remove(toRemove, new CompareByName());
 				System.out.println(products_name.inOrderString().toString() + "\n");
 				
 			} else {
