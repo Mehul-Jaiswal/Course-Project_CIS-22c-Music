@@ -1,5 +1,5 @@
 /**
- * Product.java
+ * BST.java
  * 
  * @author Mehul Jaiswal 
  * CIS 22C, course project Team 1
