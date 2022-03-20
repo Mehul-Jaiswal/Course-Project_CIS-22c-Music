@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
-import java.util.InputMismatchException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.BufferedReader;
@@ -219,12 +218,14 @@ class main {
         //exit
     //***********************WRITE TO FILES******************************
             writeAllFiles();
+            input.close();
             System.exit(0);
+            
       } 
       else {
         System.out.println("Please type a valid option!");
       }
-    }
+    //} PREVIOUS FIRST LOOP END
 
     while (customerMenuOnline) { //CUSTOMER MENU OPTIONS
 
@@ -489,6 +490,7 @@ class main {
 		} else if (userInput == "Q") {
 			employeeMenuOnline = false;
 			managerMenuOnline = false;
+			userLoggedIn = null;
 
 		} else {
 			System.out.println("Invalid option!");
@@ -496,6 +498,7 @@ class main {
 
 	}
 
+    }
 } // end of main method
 
 	public static void readAllFiles() {
