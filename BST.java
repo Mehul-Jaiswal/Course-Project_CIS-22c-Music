@@ -1,20 +1,22 @@
 
 /**
- * BST.java
- * @author Mehul Jaiswal
- * @author Brandon Lee
- * CIS 22C Final Course Project
+ * Product.java
+ * 
+ * @author Mehul Jaiswal 
+ * CIS 22C, course project Team 1
  */
-import java.util.NoSuchElementException;
+
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 @SuppressWarnings("hiding")
 public class BST<Product> {
-	class Node {
-		public Product data;
-		public Node left;
-		public Node right;
+
+	private class Node {
+		private Product data;
+		private Node left;
+		private Node right;
 
 		public Node(Product data) {
 			this.data = data;
@@ -23,7 +25,7 @@ public class BST<Product> {
 		}
 	}
 
-	public Node root;
+	private Node root;
 	private ArrayList<Product> list;
 
 	/*** CONSTRUCTORS ***/
@@ -37,15 +39,18 @@ public class BST<Product> {
 	}
 
 	/**
-	 * Copy constructor for BST
+	 * Copy constructor for BSProduct
 	 * 
-	 * @param bst the BST to make a copy of
+	 * @param bst the BSProduct to make a copy of
 	 */
 	public BST(BST<Product> bst) {
-		if (bst == null || bst.isEmpty()) {
-			return;
+		if (bst.root == null) {
+			root = null;
+			list = new ArrayList<Product>();
+		} else {
+			copyHelper(bst.root);
+			this.list = bst.list;
 		}
-		copyHelper(bst.root);
 	}
 
 	/**
@@ -54,12 +59,11 @@ public class BST<Product> {
 	 * @param node the node containing data to copy
 	 */
 	private void copyHelper(Node node) {
-		if (node == null) {
-			return;
+		if (node != null) {
+			// insert(node.data, new CompareByName());
+			copyHelper(node.left);
+			copyHelper(node.right);
 		}
-		insert((String) node.data);
-		copyHelper(node.left);
-		copyHelper(node.right);
 	}
 
 	/*** ACCESSORS ***/
@@ -69,13 +73,13 @@ public class BST<Product> {
 	 * 
 	 * @precondition !isEmpty()
 	 * @return the data stored in the root
-	 * @throws NoSuchElementException when precondition is violated
+	 * @throws NoSuchElementException when preconditon is violated
 	 */
 	public Product getRoot() throws NoSuchElementException {
-		if (isEmpty()) {
-			throw new NoSuchElementException("getRoot(): the tree is empty");
-		}
-		return root.data;
+		if (isEmpty())
+			throw new NoSuchElementException("getRoot(): Tree is empty");
+		else
+			return root.data;
 	}
 
 	/**
@@ -84,7 +88,10 @@ public class BST<Product> {
 	 * @return whether the tree is empty
 	 */
 	public boolean isEmpty() {
-		return root == null;
+		if (root == null)
+			return true;
+		else
+			return false;
 	}
 
 	/**
@@ -103,10 +110,11 @@ public class BST<Product> {
 	 * @return the size of the tree
 	 */
 	private int getSize(Node node) {
-		if (node == null) {
+		if (node == null)
 			return 0;
+		else {
+			return 1 + getSize(node.left) + getSize(node.right);
 		}
-		return getSize(node.left) + getSize(node.right) + 1;
 	}
 
 	/**
@@ -115,7 +123,11 @@ public class BST<Product> {
 	 * @return the height of the tree
 	 */
 	public int getHeight() {
-		return getHeight(root);
+		if (isEmpty())
+			return -1;
+		else {
+			return getHeight(root);
+		}
 	}
 
 	/**
@@ -125,10 +137,14 @@ public class BST<Product> {
 	 * @return the height of the tree
 	 */
 	private int getHeight(Node node) {
-		if (node == null) {
+		if (node == null)
 			return -1;
-		}
-		return Math.max(getHeight(node.left), getHeight(node.right)) + 1;
+		int lHeight = getHeight(node.left);
+		int rHeight = getHeight(node.right);
+		if (lHeight > rHeight)
+			return lHeight + 1;
+		else
+			return rHeight + 1;
 	}
 
 	/**
@@ -139,10 +155,10 @@ public class BST<Product> {
 	 * @throws NoSuchElementException when the precondition is violated
 	 */
 	public Product findMin() throws NoSuchElementException {
-		if (root == null) {
-			throw new NoSuchElementException("findMin(): the tree is null");
-		}
-		return findMin(root);
+		if (isEmpty())
+			throw new NoSuchElementException("findMin(): Tree is empty");
+		else
+			return findMin(root);
 	}
 
 	/**
@@ -152,10 +168,10 @@ public class BST<Product> {
 	 * @return the smallest value in the tree
 	 */
 	private Product findMin(Node node) {
-		if (node.left == null) {
+		if (node.left != null)
+			return findMin(node.left);
+		else
 			return node.data;
-		}
-		return findMin(node.left);
 	}
 
 	/**
@@ -166,10 +182,10 @@ public class BST<Product> {
 	 * @throws NoSuchElementException when the precondition is violated
 	 */
 	public Product findMax() throws NoSuchElementException {
-		if (root == null) {
-			throw new NoSuchElementException("findMax(): the tre is null");
-		}
-		return findMax(root);
+		if (isEmpty())
+			throw new NoSuchElementException("findMax(): Tree is empty");
+		else
+			return findMax(root);
 	}
 
 	/**
@@ -179,10 +195,115 @@ public class BST<Product> {
 	 * @return the largest value in the tree
 	 */
 	private Product findMax(Node node) {
-		if (node.right == null) {
+		if (node.right != null)
+			return findMax(node.right);
+		else
 			return node.data;
+	}
+
+	/**
+	 * Searches for a specified value in the tree
+	 * 
+	 * @param input_name the value to search for
+	 * @return whether the value is stored in the tree
+	 */
+	public Product searchByName(Product input_name, Comparator<Product> c) {
+		if (isEmpty())
+			return null;
+		else
+			return searchByName(input_name, root, c);
+	}
+
+	/**
+	 * Helper method for the search method
+	 * 
+	 * @param data the data to search for
+	 * @param node the current node to check
+	 * @return whether the data is stored in the tree
+	 */
+
+	private Product searchByName(Product data, Node node, Comparator<Product> c) {
+		if (c.compare((Product) data, (Product) node.data) == 0)
+			return node.data;
+		if (c.compare((Product) data, (Product) node.data) < 0) {
+			if (node.left == null)
+				return null;
+			else
+				return searchByName(data, node.left, c);
+		} else {
+			if (node.right == null)
+				return null;
+			else
+				return searchByName(data, node.right, c);
 		}
-		return findMax(node.right);
+	}
+
+	/**
+	 * Searches for a specified value in the tree
+	 * 
+	 * @param data the value to search for
+	 * @return whether the value is stored in the tree
+	 */
+	public Product searchByID(Product data, Comparator<Product> c) {
+		if (isEmpty())
+			return null;
+		else
+			return searchByID(data, root, c);
+	}
+
+	/**
+	 * Helper method for the search method
+	 * 
+	 * @param data the data to search for
+	 * @param node the current node to check
+	 * @return whether the data is stored in the tree
+	 */
+	private Product searchByID(Product data, Node node, Comparator<Product> c) {
+		if (c.compare((Product) data, (Product) node.data) == 0)
+			return node.data;
+		if (c.compare((Product) data, (Product) node.data) < 0) {
+			if (node.left == null)
+				return null;
+			else
+				return searchByID(data, node.left, c);
+		} else {
+			if (node.right == null)
+				return null;
+			else
+				return searchByID(data, node.right, c);
+		}
+	}
+
+	/**
+	 * Determines whether two trees store identical data in the same structural
+	 * position in the tree
+	 * 
+	 * @param o another Object
+	 * @return whether the two trees are equal
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(Object o) {
+		return equals(root, ((BST<Product>) o).root);
+	}
+
+	/**
+	 * Helper method for the equals method
+	 * 
+	 * @param node1 the node of the first bst
+	 * @param node2 the node of the second bst
+	 * @return whether the two trees contain identical data stored in the same
+	 *         structural position inside the trees
+	 */
+	private boolean equals(Node node1, Node node2) {
+		if (node1 == null && node2 == null)
+			return true;
+
+		if (node1 != null && node2 != null) {
+			return ((node1.data == node2.data) && equals(node1.left, node2.left) && equals(node1.right, node2.right));
+		}
+
+		return false;
 	}
 
 	/*** MUTATORS ***/
@@ -190,10 +311,14 @@ public class BST<Product> {
 	/**
 	 * Inserts a new node in the tree
 	 * 
-	 * @param vertices the data to insert
+	 * @param data the data to insert
 	 */
-	public void insert(String data) {
-		insert(data, root);
+	public void insert(Product data, Comparator<Product> c) {
+		if (root == null) {
+			root = new Node((Product) data);
+		} else {
+			insert(data, root, c);
+		}
 	}
 
 	/**
@@ -203,24 +328,18 @@ public class BST<Product> {
 	 * @param node the current node in the search for the correct location in which
 	 *             to insert
 	 */
-	@SuppressWarnings("unchecked")
-	void insert(String data, Node node) {
-		if (isEmpty()) {
-			root = new Node((Product) data);
+	private void insert(Product data, Node node, Comparator<Product> c) {
+		// Comparator c = new Comparator<Product>;
+		if ((c.compare(data, node.data) <= 0)) {
+			if (node.left == null)
+				node.left = new Node(data);
+			else
+				insert(data, node.left, c);
 		} else {
-			if (((String) node.data).compareTo((String) data) < 0) {
-				if (node.right == null) {
-					node.right = new Node((Product) data);
-				} else {
-					insert(data, node.right);
-				}
-			} else {
-				if (node.left == null) {
-					node.left = new Node((Product) data);
-				} else {
-					insert(data, node.left);
-				}
-			}
+			if (node.right == null)
+				node.right = new Node(data);
+			else
+				insert(data, node.right, c);
 		}
 	}
 
@@ -229,14 +348,14 @@ public class BST<Product> {
 	 * 
 	 * @param data the value to remove
 	 * @precondition !isEmpty()
-	 * @throws IllegalStateException when BST is empty
+	 * @precondition the data is located in the tree
+	 * @throws NoSuchElementException when the precondition is violated
 	 */
-	public void remove(Product data) throws IllegalStateException {
-		if (root == null) {
-			throw new IllegalStateException("The tree is empty");
-		} else {
+	public void remove(Product data) throws NoSuchElementException {
+		if (isEmpty())
+			throw new NoSuchElementException("remove(): Element is not found");
+		else
 			root = remove(data, root);
-		}
 	}
 
 	/**
@@ -246,167 +365,88 @@ public class BST<Product> {
 	 * @param node the current node
 	 * @return an updated reference variable
 	 */
-	private Node remove(Product data, Node node) {
+	public Node remove(Product data, Node node) {
 		if (node == null) {
 			return node;
+		} else if (((String) data).compareTo((String) node.data) < 0) {
+			node.left = remove(data, node.left);
+		} else if (((String) data).compareTo((String) node.data) > 0) {
+			node.right = remove(data, node.right);
+		} else if (node.left == null && node.right == null) {
+			node = null;
+		} else if (node.left != null && node.right == null) {
+			node = node.left;
+		} else if (node.left == null && node.right != null) {
+			node = node.right;
 		} else {
-			if (((String) node.data).compareTo((String) data) < 0) {
-				node.right = remove(data, node.right);
-			} else if (((String) node.data).compareTo((String) data) > 0) {
-				node.left = remove(data, node.left);
-			} else {
-
-				if (node.left == null) {
-					return node.right;
-				} else if (node.right == null) {
-					return node.left;
-				} else {
-					node.data = findMin(node.right);
-					node.right = remove(node.data, node.right);
-				}
-			}
+			node.data = findMin(node.right);
+			node.right = remove(node.data, node.right);
 		}
 		return node;
 	}
 
 	/*** ADDITIONAL OPERATIONS ***/
 
-	/**
-	 * Searches for a specified value in the tree
-	 * 
-	 * @param data the value to search for
-	 * @return whether the value is stored in the tree
-	 */
-	public boolean search(Product data) {
-		if (root == null) {
-			return false;
-		} else {
-			return search(data, root);
-		}
-	}
-
-	/**
-	 * Helper method for the search method
-	 * 
-	 * @param data the data to search for
-	 * @param node the current node to check
-	 * @return whether the data is stored in the tree
-	 */
-	private boolean search(Product data, Node node) {
-		if (((String) node.data).compareTo((String) data) == 0) {
-			return true;
-		} else if (((String) node.data).compareTo((String) data) < 0) {
-			if (node.right == null) {
-				return false;
-			} else {
-				return search(data, node.right);
-			}
-		} else {
-			if (node.left == null) {
-				return false;
-			} else {
-				return search(data, node.left);
-			}
-		}
-	}
-
-	/**
-	 * Searches for a specified value in the tree
-	 * 
-	 * @param input_name the value to search for
-	 * @return whether the value is stored in the tree
-	 */
-	public Product searchByName(String input_name, Comparator<Product> comparator) {
-		if (isEmpty())
-			return null;
-		else
-			return searchByName(input_name, root, comparator);
-	}
-
-	/**
-	 * Helper method for the search method
-	 * 
-	 * @param data the data to search for
-	 * @param node the current node to check
-	 * @return whether the data is stored in the tree
-	 */
-	@SuppressWarnings("unchecked")
-	private Product searchByName(String data, Node node, Comparator<Product> comparator) {
-		// Product ob = new Product(" "," "," ",0.0,0.0," "," ",0);
-		// CompareByName ob = new CompareByName();
-		int x = comparator.compare((Product) data, node.data);
-		if (x == 0)
-			return node.data;
-		if (x < 0) {
-			if (node.left == null)
-				return null;
-			else
-				return searchByName(data, node.left, comparator);
-		} else {
-			if (node.right == null)
-				return null;
-			else
-				return searchByName(data, node.right, comparator);
-		}
-	}
-
-	/**
-	 * Searches for a specified value in the tree
-	 * 
-	 * @param data the value to search for
-	 * @return whether the value is stored in the tree
-	 */
-	public Product searchByUID(String data, Comparator<Product> comparator) {
-		if (isEmpty())
-			return null;
-		else
-			return searchByUID(data, root, comparator);
-	}
-
-	/**
-	 * Helper method for the search method
-	 * 
-	 * @param data the data to search for
-	 * @param node the current node to check
-	 * @return whether the data is stored in the tree
-	 */
-	@SuppressWarnings("unchecked")
-	private Product searchByUID(String data, Node node, Comparator<Product> comparator) {
-		// CompareByID ob = new CompareByID();
-		int x = comparator.compare((Product) data, node.data);
-		if (x == 0)
-			return node.data;
-		if (x < 0) {
-			if (node.left == null)
-				return null;
-			else
-				return searchByUID(data, node.left, comparator);
-		} else {
-			if (node.right == null)
-				return null;
-			else
-				return searchByUID(data, node.right, comparator);
-		}
-	}
-
-	/***
-	 * ADDITIONAL OPERATIONS
-	 * 
-	 * @return
-	 ***/
-
-	public void sortByPrimary() {
+	public void sortByPrimary(Comparator<Product> c) {
 		list.clear();
 		inOrderString();
-
+		bubblesortByPrimary(c);
 	}
 
-	public void sortBySecondary() {
+	private void bubblesortByPrimary(Comparator<Product> c) {
+		int i, j;
+		Product temp;
+		int n = list.size();
+		boolean swapped;
+		for (i = 0; i < n - 1; i++) {
+			swapped = false;
+			for (j = 0; j < n - i - 1; j++) {
+				if (c.compare(list.get(j), list.get(j + 1)) > 0) {
+					// swap arr[j] and arr[j+1]
+					temp = list.get(j);
+					list.set(j, list.get(j + 1));
+					list.set(j + 1, temp);
+					swapped = true;
+				}
+			}
+
+			// IF no two elements were
+			// swapped by inner loop, then break
+			if (swapped == false)
+				break;
+		}
+	}
+
+	public void sortBySecondary(Comparator<Product> c) {
 		list.clear();
 		inOrderString();
+		bubblesortBySecondary(c);
 	}
 
-	// ************Strings************
+	private void bubblesortBySecondary(Comparator<Product> c) {
+		int i, j;
+		Product temp;
+		int n = list.size();
+		boolean swapped;
+		for (i = 0; i < n - 1; i++) {
+			swapped = false;
+			for (j = 0; j < n - i - 1; j++) {
+				if (c.compare(list.get(j), list.get(j + 1)) > 0) {
+					// swap arr[j] and arr[j+1]
+					temp = list.get(j);
+					list.set(j, list.get(j + 1));
+					list.set(j + 1, temp);
+					swapped = true;
+				}
+			}
+
+			// IF no two elements were
+			// swapped by inner loop, then break
+			if (swapped == false)
+				break;
+		}
+	}
+
 	/**
 	 * Returns a String containing the data in post order
 	 * 
@@ -455,7 +495,7 @@ public class BST<Product> {
 			return;
 		}
 		inOrderString(node.left, inOrder);
-		inOrder.append(node.data + "\n ");
+		inOrder.append(node.data + "");
 		list.add(node.data);
 		inOrderString(node.right, inOrder);
 	}
