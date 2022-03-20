@@ -238,8 +238,7 @@ class main {
           
           if(userInput == "1") {
             System.out.println("Please Enter the Product Name to Search");
-      			String in = input.nextLine();
-            input.nextLine();
+      			String in = input.next();
       			Product search_output = products_name.searchByName(new Product(in), new CompareByName());
       			if (search_output != null) {
       				System.out.println("Product name: " + search_output.getName());
@@ -272,9 +271,11 @@ class main {
         			}
           } else if(userInput == "3"){
         	  products_name.sortByPrimary(new CompareByName());
+        	  System.out.println("Name, ID, Singer, Cost, Duration, Genre, Release Year, Number in Stock Left");
 			      System.out.println(products_name.inOrderString().toString() + "\n");
           } else if(userInput == "4") {
         	  products_id.sortBySecondary(new CompareByID());
+        	  System.out.println("Name, ID, Singer, Cost, Duration, Genre, Release Year, Number in Stock Left");
 			      System.out.println(products_id.inOrderString().toString() + "\n"); 
           } else if (userInput == "5")
             System.out.println("Name, ID, Singer, Cost, Duration, Genre, Release Year, Number in Stock Left");
@@ -428,27 +429,24 @@ class main {
 
 		} else if (managerMenuOnline && userInput == "6") {
 			System.out.println("Product name: ");
-			String name = input.nextLine();
-			System.out.println("UID: ");
-			double UID = input.nextDouble();
-			System.out.println("Singer: ");
-			String singer = input.nextLine();
-			System.out.println("Song duration: ");
-			double duration = input.nextDouble();
-			input.nextLine();
-			System.out.println("Genre: ");
-			String genre = input.nextLine();
-			System.out.println("Release Year: ");
-			String release_year = input.nextLine();
-			System.out.println("Cost: ");
-			Double cost = input.nextDouble();
-			input.nextLine();
-			System.out.println("Number in stock: ");
-			String numInStock = input.nextLine();
-			input.nextLine();
-
-			Product newProduct = new Product(name, UID, singer, cost, duration, release_year, genre, numInStock);
-			products_name.insert(newProduct, new CompareByName());
+            String name = input.next();
+            System.out.println("UID: ");
+            double UID = input.nextDouble();
+            System.out.println("Singer: ");
+            String singer = input.next();
+            System.out.println("Song duration: ");
+            double duration = input.nextDouble();
+            System.out.println("Genre: ");
+            String genre = input.next();
+            System.out.println("Release Year: ");
+            String release_year = input.next();
+            System.out.println("Cost: ");
+            Double cost = input.nextDouble();
+            System.out.println("Number in stock: ");
+            String numInStock = input.next();
+            Product newProduct =  new Product(name, UID, singer, cost, duration, release_year, genre, numInStock);
+            products_name.insert(newProduct, new CompareByName());
+            System.out.println(products_name.inOrderString().toString() + "\n");
 
 		} else if (managerMenuOnline && userInput == "7") {
 			System.out.println("Enter the product id you would like to update: ");
