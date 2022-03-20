@@ -351,11 +351,11 @@ public class BST<Product> {
 	 * @precondition the data is located in the tree
 	 * @throws NoSuchElementException when the precondition is violated
 	 */
-	public void remove(Product data) throws NoSuchElementException {
+	public void remove(Product data, Comparator<Product> c) throws NoSuchElementException {
 		if (isEmpty())
 			throw new NoSuchElementException("remove(): Element is not found");
 		else
-			root = remove(data, root);
+			root = remove(data, root, c);
 	}
 
 	/**
@@ -365,13 +365,13 @@ public class BST<Product> {
 	 * @param node the current node
 	 * @return an updated reference variable
 	 */
-	public Node remove(Product data, Node node) {
+	public Node remove(Product data, Node node, Comparator<Product> c) {
 		if (node == null) {
 			return node;
-		} else if (((String) data).compareTo((String) node.data) < 0) {
-			node.left = remove(data, node.left);
-		} else if (((String) data).compareTo((String) node.data) > 0) {
-			node.right = remove(data, node.right);
+		} else if (c.compare(data, node.data) < 0) {
+			node.left = remove(data, node.left, c);
+		} else if (c.compare(data, node.data) > 0) {
+			node.right = remove(data, node.right, c);
 		} else if (node.left == null && node.right == null) {
 			node = null;
 		} else if (node.left != null && node.right == null) {
@@ -380,7 +380,7 @@ public class BST<Product> {
 			node = node.right;
 		} else {
 			node.data = findMin(node.right);
-			node.right = remove(node.data, node.right);
+			node.right = remove(node.data, node.right, c);
 		}
 		return node;
 	}
