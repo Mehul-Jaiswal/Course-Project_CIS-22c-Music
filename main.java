@@ -43,7 +43,7 @@ class main {
     boolean managerMenuOnline = false;
     boolean employeeMenuOnline = false;
     boolean customerMenuOnline = false;
-  
+    String userInput;
     
     System.out.println("Welcome to Our Music Store!");
     while (userLoggedIn == null) { 
@@ -51,7 +51,7 @@ class main {
   		System.out.println("Enter 2 to Login");
   		System.out.println("Enter 3 to exit");
   		
-  		String userInput = input.nextLine();
+  		userInput = input.nextLine();
    
   		//input.nextLine();
   		if (userInput == "1") { 
@@ -64,6 +64,7 @@ class main {
           String input_city;
           String input_state;
           String input_zip;
+          
           while (!dataApproved) {
             System.out.println("Enter your first name: ");
             input_firstName = input.nextLine();
@@ -192,7 +193,7 @@ class main {
   					}
   					else {
               userLoggedIn = employeeTable.find(new Employee(entered_username, entered_password));
-              if (userLoggedIn.getIsManager()) {
+              if (((Employee) userLoggedIn).getIsManager()) {
                 System.out.print("Successful Manager Login. Welcome Back, " + userLoggedIn.getFirstName() + "!");
               }
               else {
@@ -430,7 +431,7 @@ class main {
 			customer.getUnshippedOrders().advanceIteratorToIndex(indexOfShippedOrder);
 			customer.getUnshippedOrders().removeIterator();
 
-			System.out.println("Order " + shippedOrder.getID() + " shipped!");
+			System.out.println("Order " + shippedOrder.getOrderID() + " shipped!");
 
 		} else if (managerMenuOnline && userInput == "6") {
 			System.out.println("Product name: ");
@@ -497,13 +498,13 @@ class main {
 	}
 }// end of main method
 
-	public static readAllFiles() {
+	public static void readAllFiles() {
     readUserFiles();
     readOrdersFile();
     readproductfile();
   }
 
-	public static writeAllFiles() {
+	public static void writeAllFiles() {
     writeUserFiles();
     writeOrdersFile();
     writeProductsFile();
