@@ -292,6 +292,7 @@ class main {
               
               Product orderedProduct = products_name.searchByName(new Product(nameOfProduct), new CompareByName()); 
               orderID++;
+              
               LinkedList<Product> productList = new LinkedList<Product>(); 
               SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy"); 
               Date date = new Date();
@@ -593,9 +594,10 @@ class main {
 				fileWriter.println(priorityOrders.get(i).getOrderID());
 				fileWriter.println(priorityOrders.get(i).getCustomer().getUsername());
 				fileWriter.println(priorityOrders.get(i).getDate());
-				fileWriter.println(priorityOrders.get(i).getOrderContents().size()); // amount of orders
-				for (int j = 0; j < priorityOrders.get(i).getOrderContents().size(); j++) {
-					fileWriter.println(priorityOrders.get(i).getOrderContents().get(j).getName());
+				fileWriter.println(priorityOrders.get(i).getOrderContents().getLength()); // amount of orders
+				for (int j = 0; j < priorityOrders.get(i).getOrderContents().getLength(); j++) {
+					priorityOrders.get(i).getOrderContents().advanceIteratorToIndex(j);
+					fileWriter.println(priorityOrders.get(i).getOrderContents().getIterator().getName());
 				}
 				fileWriter.println(priorityOrders.get(i).getShippingSpeed());
 				fileWriter.close();
@@ -634,7 +636,7 @@ class main {
 
       Order readOrder = new Order(Integer.parseInt(orderID), customer, date, orderContents, Integer.parseInt(shippingSpeed));
 
-      priorityQueue.insert(readOrder);
+      priorityQueue.insert(readOrder, new priorityComparator1());
       
     }
 
