@@ -18,9 +18,9 @@ public class CompareByID implements Comparator<Product>{
      * or 1 (the other Product ordered first)
      */
 	@Override
-    public int compare(Product p1, Product p2) {
-	Product s1=(Product)p1;  
-	Product s2=(Product)p2;
-    	return s1.getUID().compareTo(s2.getUID());
-	}
+	public int compare(Product data, Product data2) {
+		Product s1=(Product)data;  
+		Product s2=(Product)data2;
+		return (int)(s1.getUID()-s2.getUID());
+    }
 }
