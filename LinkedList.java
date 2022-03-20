@@ -1,8 +1,7 @@
-
 /**
 * @author Tian Hong Zhu Zhou
-* @author Ved Lyengar
-* CIS 22C, Lab 2
+* @author Ran Bar-Niv
+* 
 */
 import java.util.NoSuchElementException;
 
@@ -90,7 +89,7 @@ public class LinkedList<T> {
      * @return the value stored at node first
      * @throws NoSuchElementException indicates as that there are no elements in the list.
      */
-    public T getFirst() throws NoSuchElementException {
+    public T getFirst() throws NoSuchElementException {							//Runtime Best: O(1), Avg: O(1), Worst:O(1)
         if(length == 0) {
         	throw new NoSuchElementException("getFirst(): The list is Empty!!!!);");
         }
@@ -107,7 +106,7 @@ public class LinkedList<T> {
      */
     public T getLast() throws NoSuchElementException {
         if(length == 0) {
-        	throw new NoSuchElementException("getLast(): There's no elements in the list!!");
+        	throw new NoSuchElementException("getLast(): There's no elements in the list!!");		//Runtime Best: O(1), Avg: O(1), Worst:O(1)
         }
         return last.data;
     }
@@ -119,7 +118,7 @@ public class LinkedList<T> {
      */
     public T getIterator() throws NullPointerException {
     	if(iterator == null) {
-    		throw new NullPointerException("getIterator(): iterator is null!");
+    		throw new NullPointerException("getIterator(): iterator is null!");			//Runtime Best: O(1), Avg: O(1), Worst:O(1)
     	}
         return iterator.data; //general case
         
@@ -130,7 +129,7 @@ public class LinkedList<T> {
      * @return the length of the LinkedList from 0 to n
      */
     public int getLength() {
-        return length;
+        return length;			//Runtime Best: O(1), Avg: O(1), Worst:O(1)
     }
 
     /**
@@ -139,7 +138,7 @@ public class LinkedList<T> {
      */
     public boolean isEmpty() {
         return length == 0;
-    }
+    }					//Runtime Best: O(1), Avg: O(1), Worst:O(1)
 
  
 
@@ -149,7 +148,7 @@ public class LinkedList<T> {
      */
     public boolean offEnd() {
         return iterator == null;
-    }
+    }				//Runtime Best: O(1), Avg: O(1), Worst:O(1)
 
  
 
@@ -163,7 +162,7 @@ public class LinkedList<T> {
     public void addFirst(T data) {
         if(length == 0) {
         	first = last = new Node(data);
-        }
+        }															//Runtime Best: O(1), Avg: O(1), Worst:O(1)
         else {
         	Node newFirstNode = new Node(data);
         	newFirstNode.next = first;
@@ -183,7 +182,7 @@ public class LinkedList<T> {
         	first = last = new Node(data);
         }
         else {
-        	Node newLastNode = new Node(data);
+        	Node newLastNode = new Node(data);					//Runtime Best: O(1), Avg: O(1), Worst:O(1)
         	newLastNode.prev = last;
         	last.next = newLastNode;
         	last = newLastNode;
@@ -206,7 +205,7 @@ public class LinkedList<T> {
         	Node n = new Node(data);
         	n.next = iterator.next;
         	n.prev = iterator;
-        	iterator.next.prev = n;
+        	iterator.next.prev = n;									//Runtime Best: O(1), Avg: O(n), Worst:O(n)
         	iterator.next = n;
         	length++;
         }
@@ -323,6 +322,65 @@ public class LinkedList<T> {
     }
 
     /**** ADDITIONAL OPERATIONS ****/
+    
+    /**
+     * Determines at which index the iterator is located
+     * Indexed from 0 to length - 1
+     * @return the index number of the iterator
+     * @precondition !offEnd()
+     * @throws NullPointerException when precondition is violated
+     */
+    public int getIteratorIndex() throws NullPointerException {
+        if(offEnd()) {
+        	throw new NullPointerException("getIteratorIndex(): The iterator is offEnd!!");
+        }
+        Node p = first;
+        int count = 0;
+        while(p != iterator) {
+        	p = p.next;								
+        	count++;
+        }
+        return count;
+    }
+    
+    /**
+     * Searches the LinkedList for a given
+     * element's index
+     * @param data the data whose index to locate
+     * @return the index of the data or -1 if
+     * the data is not contained in the LinkedList
+     */
+    public int findIndex(T data) {
+        Node p = first;
+        int count = 0;
+        while (p!= null) {
+        	if(p.data.equals(data)) {
+        		return count;
+        	}
+        	p = p.next;
+        	count++;
+        }
+        return -1;
+    }
+    
+    /**
+     * Advances the iterator to location within
+     * the LinkedList specified by the given index
+     * @param index the index at which to place the
+     * iterator.
+     * @precondition !offEnd()
+     * @throws NullPointerException when the precondition is
+     * violated
+     */
+    public void advanceIteratorToIndex(int index) throws NullPointerException {
+       if(offEnd()) {
+    	   throw new NullPointerException("advanceIteratorToIndex(): The iterator is offEnd");
+       }
+       for(int i = 0; i<= index -1; i++) {
+    	  advanceIterator();
+       }
+       
+    }
 
     /**
      * Converts the LinkedList to a String, with each value separated by a blank
@@ -334,10 +392,21 @@ public class LinkedList<T> {
        StringBuilder result = new StringBuilder();
        Node temp = first;
        while(temp != null) {
-    	   result.append(temp.data + " ");
+    	   
+    	   
+    	   //result.append("[");
+    	   
+    	   result.append(temp.data + "\n");
+    	   
+    	   //result.append("]");
+    	   
+    	   //if (temp.prev != null && temp.next != null) {
+    		//   result.append("[");
+    	   //}
+    	   
     	   temp = temp.next;
        }
-       return result.toString() + "\n";
+       return result.toString();
     	}
     
     /**
@@ -414,27 +483,36 @@ public class LinkedList<T> {
     }
     
     /**
-     * Determines whether a LinkedList is reversible, i.e. the data is the same
-     * written both forward and backward e.g. isReversible(1 2 3 2 1) -> true e.g.
-     * isReversible(A B B A) -> true
-     * 
+     * Determines whether a LinkedList is
+     * reversible, i.e. the data is the same
+     * written both forward and backward
+     * e.g. isReversible(1 2 3 2 1) -> true
+     * e.g. isReversible(A B B A) -> true
      * @return whether the list is reversible
      */
     public boolean isReversible() {
-        if (isEmpty() || length == 1) {
-            return true;
-        } else {
-            Node headTemp = first;
-            Node lastTemp = last;
-            for (int i = 0; i < length/2;) {
-                if (!headTemp.data.equals(lastTemp.data)) {
-                    return false;
-                }
-                headTemp = headTemp.next;
-                lastTemp = lastTemp.prev;
-                i++;
-            }
-            return true;
+        LinkedList <T> copy = new LinkedList<> (this);
+        Node prev = null;
+        Node current = copy.first;
+        while(current != null) {
+        	Node nextTemp = current.next;
+        	current.next = prev;
+        	prev = current;
+        	current = nextTemp;
         }
+        Node temp1 = copy.first;
+        Node temp2 = this.first;
+        int count = 0;
+        while(temp1 != null) {
+        	if(temp1.data == temp2.data) {
+        		count = count + 1;
+        	}
+        }
+        if(this.length == count) {
+        	return true;
+        } else {
+        	return false;
+        }
+        	
     }
 }

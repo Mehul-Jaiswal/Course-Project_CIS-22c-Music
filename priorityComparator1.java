@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 public class priorityComparator1 implements Comparator<Order> {
  
   /**

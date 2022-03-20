@@ -15,20 +15,22 @@ public class compareByOrderID implements Comparator<Order> {
      */
   @Override
 	public int compare(Order arg0, Order arg1) {
-		return String.compare(arg0.getID(), arg1.getID());
+		return Integer.compare(arg0.getOrderID(), arg1.getOrderID());
+				
 	}
 	
   /**
   * Compares two Customer objects by
   */
-	public boolean equals(Object o) {
+	public boolean equals(Order b, Object o) {
 		if (o == this) {
 	        return true;
 	    } else if (!(o instanceof Order)) {
 	        return false;
 	    } else { // now safe to cast
 	        Order p = (Order) o;
-	        return getID().equals(p.getID());         
+	        return b.getOrderID() - p.getOrderID() == 0;
+	        		     
 	    }
 	}
 	

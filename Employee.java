@@ -19,6 +19,11 @@ public class Employee extends User{
 		this.password = password;
 	}
 	
+	public Employee(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+	
 	public Boolean getIsManager() {
 		return isManager;
 	}

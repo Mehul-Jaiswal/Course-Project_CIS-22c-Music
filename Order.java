@@ -45,22 +45,33 @@ public class Order {
 	 * @param shippingSpeed decided by customer
 	 * @param priority for the heap 
 	 */
-	public Order(int orderID, Customer customer, String date, LinkedList<Product> contents,
+	public Order(int orderID, Customer customer, String date, LinkedList<Product> productList,
 			int shippingSpeed) {
 		
 		this.orderID = orderID;
 		this.customer = customer;
 		this.date = date;
-		orderContents = new LinkedList<Product>(contents);
+		orderContents = new LinkedList<Product>(productList);
 		this.shippingSpeed = shippingSpeed;
 
 		priority = 100 - shippingSpeed - setDateInt(date);
 		
 	}
+	
+	public Order(int orderID) {
+		this.orderID = orderID;
+	}
+	
+	public Order(Customer customer) {
+		this.customer = customer;
+	}
+
+	
 
 	
 //*****************GETTERS********************
-	
+
+
 	/**
 	 * get the order ID
 	 * @return the order ID

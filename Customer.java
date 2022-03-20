@@ -24,6 +24,11 @@ public class Customer extends User {
   public Customer(String username) {
 		this.username = username;
   }
+  
+  public Customer(String firstName, String lastName, boolean c) {
+	  this.firstName = firstName;
+	  this.lastName= lastName;
+  }
 	
 	public Customer(String username, String password) {
 		this.username = username;

@@ -2,7 +2,7 @@
  * HashTable.java
  * @author Ran Bar-Niv 
  * @author Tian Hong Zhu Zhou 
- * CIS 22C
+ * CIS 22C, Lab 5
  */
 import java.util.ArrayList;
 

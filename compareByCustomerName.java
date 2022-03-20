@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class customerNameComparator implements Comparator<Order> {
+public class compareByCustomerName implements Comparator<Order> {
 	
   /**
      * Compares two Customer objects by primary key - name to determine ordering
@@ -15,20 +15,20 @@ public class customerNameComparator implements Comparator<Order> {
      */
   @Override
 	public int compare(Order arg0, Order arg1) {
-		return String.compare(arg0.customer.getName(), arg1.customer.getName());
+		return (arg0.getCustomer().getFirstName() + arg0.getCustomer().getLastName()).compareTo( arg1.getCustomer().getFirstName() + arg1.getCustomer().getLastName());
 	}
 	
   /**
   * Compares two Customer objects by
   */
-	public boolean equals(Object o) {
+	public boolean equals(Order b, Object o) {
 		if (o == this) {
 	        return true;
 	    } else if (!(o instanceof Order)) {
 	        return false;
 	    } else { // now safe to cast
 	        Order p = (Order) o;
-	        return customer.getName().equals(p.customer.getName());         
+	        return (b.getCustomer().getFirstName() + b.getCustomer().getLastName()   ).equals(p.getCustomer().getFirstName() + p.getCustomer().getLastName());         
 	    }
 	}
 	

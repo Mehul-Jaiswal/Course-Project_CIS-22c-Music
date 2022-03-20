@@ -10,6 +10,7 @@ import java.util.Date;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
+
 //import java.io.CharConversionException;
 
 class main {
@@ -57,19 +58,19 @@ class main {
   		//input.nextLine();
   		if (userInput == "1") { 
           boolean dataApproved = false;
-          String input_firstName;
-          String input_lastName;
-          String input_username;
-          String input_password;
-          String input_address;
-          String input_city;
-          String input_state;
-          String input_zip;
+          String input_firstName = null;
+          String input_lastName = null;
+          String input_username = null;
+          String input_password = null;
+          String input_address = null;
+          String input_city = null ;
+          String input_state = null;
+          String input_zip = null;
           
           while (!dataApproved) {
             System.out.println("Enter your first name: ");
             input_firstName = input.nextLine();
-    				if (!(input_firstName.contains(','))) {
+    				if (!(input_firstName.contains(","))) {
               dataApproved = true;
             } else {
               System.out.println("Invalid first name! First name may not contain commas. Please Try Again.");
@@ -79,7 +80,7 @@ class main {
           while (!dataApproved) {
     				System.out.println("Enter your last name: ");
     				input_lastName = input.nextLine();
-            if(!(input_lastName.contains(','))) {
+            if(!(input_lastName.contains(","))) {
               dataApproved = true;
             }
             else {
@@ -90,7 +91,7 @@ class main {
           while (!dataApproved) {
             System.out.println("Enter a username: ");
             input_username = input.nextLine();
-            if(!(input_username.contains(','))) {
+            if(!(input_username.contains(","))) {
                 dataApproved = true;
             }
             else {
@@ -101,7 +102,7 @@ class main {
     			while (!dataApproved) {	
             System.out.println("Enter a password: ");
             input_password = input.nextLine();
-            if(!(input_password.contains(','))) {
+            if(!(input_password.contains(","))) {
               dataApproved = true;
             }
             else {
@@ -112,7 +113,7 @@ class main {
           while (!dataApproved) {
             System.out.println("Enter your street address: ");
             input_address = input.nextLine();
-            if (!(input_address.contains(','))) {
+            if (!(input_address.contains(","))) {
               dataApproved = true;
             }
             else {
@@ -123,7 +124,7 @@ class main {
           while (!dataApproved) {
             System.out.println("Enter the city of your residence: ");
             input_city = input.nextLine();
-            if(!(input_city.contains(','))) {
+            if(!(input_city.contains(","))) {
               dataApproved = true;
             }
             else {
@@ -134,7 +135,7 @@ class main {
     			while (!dataApproved) {
             System.out.println("Enter the state of your residence: ");
             input_state = input.nextLine();
-            if (!(input_state.contains(','))) {
+            if (!(input_state.contains(","))) {
               dataApproved = true;
             }
             else {
@@ -145,7 +146,7 @@ class main {
           while (!dataApproved) {
             System.out.println("Enter the zip code of your residence: ");
             input_zip = input.nextLine();
-            if(!(input_zip.contains(','))) {
+            if(!(input_zip.contains(","))) {
               dataApproved = true;
             }
             else {
@@ -188,7 +189,14 @@ class main {
           }
   
   			} else if (userInput == "2") { //THEY ARE LOGGIN IN AS EMPLOYEE 
-          while (!loginSuccessful) {
+          
+  			while (!loginSuccessful) {
+  				
+  			System.out.println("Enter username: ");
+ 			String entered_username = input.next();
+ 			System.out.println("Enter password: ");
+ 			String entered_password = input.next();
+  				
             if (employeeTable.find(new Employee(entered_username, entered_password)) == null) {
   						System.out.println("We could not find an account with that username/password. Please try again below!");
   					}
@@ -210,12 +218,8 @@ class main {
         //write all files
         //exit
     //***********************WRITE TO FILES******************************
-            try  {
             writeAllFiles();
-            } catch (FileNotFoundException e) {
-              System.out.println("FileNotFoundException: Cannot write to files");
-            }
-            exit();
+            System.exit(0);
       } 
       else {
         System.out.println("Please type a valid option!");
@@ -234,7 +238,7 @@ class main {
       
           System.out.println("Enter Q to Quit");
           
-  			  String userInput = input.nextLine();
+  			userInput = input.nextLine();
           
           if(userInput == "1") {
             System.out.println("Please Enter the Product Name to Search");
@@ -281,14 +285,14 @@ class main {
             System.out.println("Name, ID, Singer, Cost, Duration, Genre, Release Year, Number in Stock Left");
             System.out.println(products_name.inOrderString().toString() + "\n");
 
-            orderingActive = true;
+            boolean orderingActive = true;
             while (orderingActive) {
                 System.out.println("Type the name of the product you would like, or Q if you are done: ");
-              String nameOfProduct = input.nextLine();
+              String nameOfProduct = input.next();
               
-              Product orderedProduct = products_name.searchByName(nameOfProduct, new CompareByName()); 
+              Product orderedProduct = products_name.searchByName(new Product(nameOfProduct), new CompareByName()); 
               orderID++;
-              LinkedList<Product> productList = new LinkedList<Product>();
+              LinkedList<Product> productList = new LinkedList<Product>(); 
               SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy"); 
               Date date = new Date();
               String strDate = formatter.format(date);
@@ -296,7 +300,7 @@ class main {
               
               if (orderedProduct != null) {
                 productList.addLast(orderedProduct);
-                System.out.println("Added " + nameOfProduct + " to your order.")
+                System.out.println("Added " + nameOfProduct + " to your order.");
               } else if (orderedProduct == null && nameOfProduct != "Q") {
                 System.out.println("Please enter a valid product name.");
                 
@@ -307,25 +311,26 @@ class main {
                 while (true) {
                   System.out.println("Would you like to ship this order? Y/N");
                   userInput = input.nextLine();
+                  int shippingSpeed = 1;
                   if (userInput == "Y") {
                     while (true) {
                       System.out.println("What shipping speed would you like? 1. Standard 2. Rush 3. Overnight");
                       userInput = input.nextLine();
                       if (userInput == "1") {
-                        int shippingSpeed == 1;
+                        shippingSpeed = 1;
                         break;
                       } else if (userInput == "2") {
-                        int shippingSpeed == 2;
+                        shippingSpeed = 2;
                         break;
                       } else if (userInput == "3") {
-                        int shippingSpeed == 3;
+                        shippingSpeed = 3;
                         break;
                       } else {
                         System.out.println("Please choose a valid shipping speed");
                       }  
                     }
                     
-                    Order customerOrder = new Order(orderID, userLoggedIn, strDate, productList, shippingSpeed);
+                    Order customerOrder = new Order(orderID, (Customer) userLoggedIn, strDate, productList, shippingSpeed);
                     orderingActive = false;
                     break;
                     
@@ -373,7 +378,7 @@ class main {
 			System.out.println("Enter order ID: ");
 			Integer entered_order_id = input.nextInt();
 			input.nextLine();
-			Order result = priorityQueue.search(entered_order_id, new compareByOrderID());
+			Order result = priorityQueue.search(new Order(entered_order_id), new compareByOrderID());
 
 			if (result != null) {
 				result.toString();
@@ -383,11 +388,13 @@ class main {
 
 		} else if (userInput == "2") {
 
-			System.out.println("Enter Customer first and last name: ");
-			String entered_order_name = input.nextLine();
-			Order result = priorityQueue.search(entered_order_name, new compareByCustomerName()); // need new comparator
-																									// class, need to
-																									// update return
+			System.out.println("Enter Customer first name: ");
+			String enteredFirstName = input.nextLine();
+			System.out.println("Enter Customer last name: ");
+			String enteredLastName = input.nextLine();
+			
+			
+			Order result = priorityQueue.search(new Order(new Customer(enteredFirstName, enteredLastName, true)), new compareByCustomerName()); 
 
 			if (result != null) {
 				result.toString();
@@ -406,7 +413,7 @@ class main {
 
 		} else if (userInput == "4") {
 
-			ArrayList<Order> orderedPriority = priorityQueue.sort();
+			ArrayList<Order> orderedPriority = priorityQueue.sort(new priorityComparator1());
 			for (int i = orderedPriority.size() - 1; i >= 1; i--) {
 				System.out.print(orderedPriority.get(i) + " ");
 			}
@@ -418,12 +425,12 @@ class main {
 
 			Customer customer = shippedOrder.getCustomer();
 
-			customer.getShippedOrders().addLast();
-			int indexOfShippedOrder = customer.getUnshippedOrders().findIndex(shippedOrder);
-			customer.getUnshippedOrders().positionIterator();
+			customer.getshippedOrders().addLast(shippedOrder);
+			int indexOfShippedOrder = customer.getunshippedOrders().findIndex(shippedOrder);
+			customer.getunshippedOrders().positionIterator();
 
-			customer.getUnshippedOrders().advanceIteratorToIndex(indexOfShippedOrder);
-			customer.getUnshippedOrders().removeIterator();
+			customer.getunshippedOrders().advanceIteratorToIndex(indexOfShippedOrder);
+			customer.getunshippedOrders().removeIterator();
 
 			System.out.println("Order " + shippedOrder.getOrderID() + " shipped!");
 
@@ -454,24 +461,24 @@ class main {
 			Product toUpdate = products_name.searchByID(new Product(in), new CompareByID());
 			System.out.println("Enter 1 to update the cost: ");
 			System.out.println("Enter 2 to update the number in stock: ");
-			int in = input.nextInt();
-			if (in == 1) {
+			int in2 = input.nextInt();
+			if (in2 == 1) {
 				System.out.println("Enter the cost amount to update");
 				double coost = input.nextDouble();
 				toUpdate.setCost(coost);
 			}
-			if (in == 2) {
+			if (in2 == 2) {
 				System.out.println("Enter the number to update in stock");
 				String no = input.nextLine();
 				toUpdate.setNuminStock(no);
 			}
 		} else if (managerMenuOnline && userInput == "8") {
-			System.out.println("Enter the product id you would like to remove: ");
-			String in = sc.next();
+			System.out.println("Enter the product name you would like to remove: ");
+			double in = input.nextDouble();
 
-			Product toRemove = products_name.searchByName(new Product(in), new CompareByName());
+			Product toRemove = products_name.searchByID(new Product(in), new CompareByID());
 			if (toRemove != null) {
-				products_name.remove(toRemove, new CompareByName());
+				products_name.remove(toRemove, new CompareByID());
 				System.out.println(products_name.inOrderString().toString() + "\n");
 				
 			} else {
@@ -488,19 +495,32 @@ class main {
 
 	}
 
-	}
-}// end of main method
+} // end of main method
 
 	public static void readAllFiles() {
     readUserFiles();
-    readOrdersFile();
+    
+    try { readOrdersFile(); 
+    
+    } catch(FileNotFoundException e) {
+    	System.out.println("FileNotFoundException: File not found");
+    }
+    
     readproductfile();
   }
 
 	public static void writeAllFiles() {
     writeUserFiles();
-    writeOrdersFile();
-    //writeProductsFile();
+    
+    
+    try { writeOrdersFile(); 
+    
+    }catch(FileNotFoundException e) {
+    	System.out.println("FileNotFoundException: File not found");
+    }
+    
+    
+    productrewritefile();
   }
 
 	public static BST<Product> readproductfile()
@@ -542,6 +562,24 @@ class main {
 		}
 		return products_name;
 	}
+	
+	public static void productrewritefile() 
+    {
+        FileWriter output = null;
+        try {
+            output = new FileWriter("product.txt");
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        PrintWriter filewriter = new PrintWriter(output);
+                filewriter.println(products_name.inOrderString()); 
+
+        try {
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 	public static void writeOrdersFile() throws FileNotFoundException {
 
@@ -549,17 +587,17 @@ class main {
 			File out = new File(OrdersFileName);
 			PrintWriter fileWriter = new PrintWriter(out);
 
-			ArrayList<Order> priorityOrders = priorityQueue.sort();
+			ArrayList<Order> priorityOrders = priorityQueue.sort(new priorityComparator1());
 
 			for (int i = 0; i < priorityOrders.size(); i++) {
 				fileWriter.println(priorityOrders.get(i).getOrderID());
 				fileWriter.println(priorityOrders.get(i).getCustomer().getUsername());
 				fileWriter.println(priorityOrders.get(i).getDate());
-				fileWriter.println(priorityOrders.orderContents.size()); // amount of orders
-				for (int i = 0; i < priorityOrders.orderContents.size(); i++) {
-					fileWriter.println(priorityOrders.orderContents.get(i).getName());
+				fileWriter.println(priorityOrders.get(i).getOrderContents().size()); // amount of orders
+				for (int j = 0; j < priorityOrders.get(i).getOrderContents().size(); j++) {
+					fileWriter.println(priorityOrders.get(i).getOrderContents().get(j).getName());
 				}
-				fileWriter.println(priorityOrders.get(i).shippingSpeed());
+				fileWriter.println(priorityOrders.get(i).getShippingSpeed());
 				fileWriter.close();
 			}
 
@@ -594,7 +632,7 @@ class main {
 
       
 
-      Order readOrder = new Order(Integer.parseInt(orderID), customerName, date, orderContents, Integer.parseInt(shippingSpeed));
+      Order readOrder = new Order(Integer.parseInt(orderID), customer, date, orderContents, Integer.parseInt(shippingSpeed));
 
       priorityQueue.insert(readOrder);
       
@@ -744,3 +782,4 @@ class main {
 	}
 
 } // End of class main
+
