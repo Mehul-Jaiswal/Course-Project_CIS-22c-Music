@@ -72,10 +72,10 @@ public class Customer extends User {
   public LinkedList<Order> getunshippedOrders(){
     return unshippedOrders;
   }
-  public LinkedList<Order> setshippedOrders(new LinkedList<Order> so){
+  public void setshippedOrders(LinkedList<Order> so){
     shippedOrders = so;
   }
-  public LinkedList<Order> setunshippedOrders(new LinkedList<Order> uso){
+  public void setunshippedOrders(LinkedList<Order> uso){
     unshippedOrders = uso;
   }
 
