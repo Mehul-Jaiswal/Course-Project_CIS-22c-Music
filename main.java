@@ -10,6 +10,7 @@ import java.util.Date;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
+//import java.io.CharConversionException;
 
 class main {
 
@@ -30,7 +31,7 @@ class main {
 
 	static int orderID = 000;
 
-	public static void main(String[] args) {
+	public main(String[] args) {
   
 
     
@@ -237,8 +238,8 @@ class main {
           
           if(userInput == "1") {
             System.out.println("Please Enter the Product Name to Search");
-      			String in = sc.nextLine();
-            sc.nextLine();
+      			String in = input.nextLine();
+            input.nextLine();
       			Product search_output = products_name.searchByName(new Product(in), new CompareByName());
       			if (search_output != null) {
       				System.out.println("Product name: " + search_output.getName());
@@ -252,29 +253,23 @@ class main {
       				System.out.println("There are no Products with this name.");
       			}
             }
-            else  {
-            System.out.println("There are no Products with this name.");
-            }
         
           
-          } else if (userInput == "2") {
+           if (userInput == "2") {
             System.out.println("Please Enter the Product ID to Search");
-            Double in = sc.nextDouble();
-            Product search_output2 = products_id.searchByID(new Product(in), new CompareByID());
-            
-      
-
-		if (search_output2 != null) {
-			System.out.println("Product name: " + search_output2.getName());
-			System.out.println("Product ID: " + search_output2.getUID());
-			System.out.println("Product Singer: " + search_output2.getSinger());
-			System.out.println("Product Duration: " + search_output2.getDuration());
-			System.out.println("Product Genre: " + search_output2.getGenre());
-			System.out.println("Product Release Year: " + search_output2.getReleaseYear());
-			System.out.println("Product Cost: $" + search_output2.getCost());
-		} else {
-			System.out.println("There are no Products with this ID.");
-		}
+            Double in = input.nextDouble();
+        	Product search_output2 = products_id.searchByID(new Product(in), new CompareByID());
+        			if (search_output2 != null) {
+        				System.out.println("Product name: " + search_output2.getName());
+        				System.out.println("Product ID: " + search_output2.getUID());
+        				System.out.println("Product Singer: " + search_output2.getSinger());
+        				System.out.println("Product Duration: " + search_output2.getDuration());
+        				System.out.println("Product Genre: " + search_output2.getGenre());
+        				System.out.println("Product Release Year: " + search_output2.getReleaseYear());
+        				System.out.println("Product Cost: $" + search_output2.getCost());
+        			} else {
+        				System.out.println("There are no Products with this ID.");
+        			}
           } else if(userInput == "3"){
         	  products_name.sortByPrimary(new CompareByName());
 			      System.out.println(products_name.inOrderString().toString() + "\n");
@@ -287,7 +282,7 @@ class main {
 
             orderingActive = true;
             while (orderingActive) {
-                System.out.println("Type the name of the product you would like, or Q if you are done: ")
+                System.out.println("Type the name of the product you would like, or Q if you are done: ");
               String nameOfProduct = input.nextLine();
               
               Product orderedProduct = products_name.searchByName(nameOfProduct, new CompareByName()); 
@@ -348,10 +343,10 @@ class main {
               
             }
               
-            }
+            
           
             
-  			}
+		}	
 
 	while(employeeMenuOnline||managerMenuOnline){
 		System.out.println("Logged in as " + userLoggedIn.getUsername() + ": Employee Menu");
@@ -457,28 +452,30 @@ class main {
 
 		} else if (managerMenuOnline && userInput == "7") {
 			System.out.println("Enter the product id you would like to update: ");
-			double in = sc.nextDouble();
+			double in = input.nextDouble();
 			Product toUpdate = products_name.searchByID(new Product(in), new CompareByID());
 			System.out.println("Enter 1 to update the cost: ");
 			System.out.println("Enter 2 to update the number in stock: ");
-			int userInput = sc.nextInt();
-			if (userInput == 1) {
+			int in = input.nextInt();
+			if (in == 1) {
 				System.out.println("Enter the cost amount to update");
-				double coost = sc.nextDouble();
+				double coost = input.nextDouble();
 				toUpdate.setCost(coost);
 			}
-			if (userInput == 2) {
+			if (in == 2) {
 				System.out.println("Enter the number to update in stock");
-				String no = sc.nextLine();
+				String no = input.nextLine();
 				toUpdate.setNuminStock(no);
 			}
 		} else if (managerMenuOnline && userInput == "8") {
 			System.out.println("Enter the product name you would like to remove: ");
-			String in = input.nextLine();
+			double in = input.nextDouble();
 
-			Product toRemove = products_name.searchByName(in, newCompareByName);
+			Product toRemove = products_name.searchByID(new Product(in), new CompareByID());
 			if (toRemove != null) {
-				products_name.remove(toRemove);
+				products_name.remove(toRemove, new CompareByID());
+				System.out.println(products_name.inOrderString().toString() + "\n");
+				
 			} else {
 				System.out.println("Product not found to remove");
 			}
@@ -505,7 +502,7 @@ class main {
 	public static void writeAllFiles() {
     writeUserFiles();
     writeOrdersFile();
-    writeProductsFile();
+    //writeProductsFile();
   }
 
 	public static BST<Product> readproductfile()
@@ -538,6 +535,7 @@ class main {
 						new Product(vertices[0], Double.parseDouble(vertices[1]), vertices[2], Double.parseDouble(vertices[3]),
 								Double.parseDouble(vertices[4]), vertices[5], vertices[6], vertices[7]),
 						new CompareByID());
+				System.out.println("Product file was read successfully and product bst was instantiated!");
 				
 			}
 			buff.close();
@@ -589,10 +587,10 @@ class main {
       
       String date = fileReader.nextLine();
       String amountOfOrders = fileReader.nextLine();
-      int amountOfOrdersInt = Integer.parse(amountOfOrders);
+      int amountOfOrdersInt = Integer.parseInt(amountOfOrders);
       for (int i = 0; i < amountOfOrdersInt; i++) {
         String productName = fileReader.nextLine();
-        orderContents.addLast(products.searchByName(productName, new CompareByName()) )
+        orderContents.addLast(products_name.searchByName(new Product(productName), new CompareByName()) );
       } 
       String shippingSpeed = fileReader.nextLine();
 
