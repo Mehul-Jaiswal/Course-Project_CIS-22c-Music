@@ -26,7 +26,7 @@ public class Order {
 	private Customer customer;
 	private String date;
 	private LinkedList<Product> orderContents; //fill in Product based on your own product class
-	private int shippingSpeed; //or use enums
+	private int shippingSpeed; 
 	private int priority; 
 	private int startYear = 2022;
 
@@ -138,7 +138,7 @@ public class Order {
 	}
 	
 	public int setDateInt(String date) {
-		String[] splitArray = date.split("-"); // "03-15-2022"
+		String[] splitArray = date.split("/"); // "03/15/2022"
 		int month = Integer.parseInt(splitArray[0]);
 		int day = Integer.parseInt(splitArray[1]);
 		int year = Integer.parseInt(splitArray[2]);

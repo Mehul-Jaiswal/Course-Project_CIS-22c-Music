@@ -1,0 +1,54 @@
+            System.out.println("Enter 1 to Search for the Product by Name");
+            System.out.println("Enter 2 to Search for the Product by ID");
+            System.out.println("Enter 3 to List the Product in Sorted by Name");
+            System.out.println("Enter 4 to List the Product in Sorted by ID");
+            System.out.println("Enter 5 to Log Out");
+  			  int i = input.nextInt();
+          if(i == 1){
+          System.out.println("Please Enter the Product Name to Search");
+          String input_name = input.nextLine();
+          Product search_output = products_name.searchByName(input_name, new CompareByName());
+          if(search_output!=null){
+            System.out.println("Product name: " + search_output.getName());
+            System.out.println("Product ID: " +search_output.getUID());
+            System.out.println("Product Singer: " +search_output.getSinger());
+            System.out.println("Product Duration: " +search_output.getDuration());
+            System.out.println("Product Genre: " +search_output.getGenre());
+            System.out.println("Product Release Year: " +search_output.getReleaseYear());
+            System.out.println("Product Cost: " +search_output.getCost());
+//        	  search_output.toString();
+          }
+          else{
+            System.out.println("There are no Products with this name.");
+          }
+        }
+
+else if(i == 2){
+          System.out.println("Please Enter the Product ID to Search");
+          String input_id = input.nextLine();
+          Product search_output2 = products_id.searchByName(input_id, new CompareByName());
+          if(search_output2!=null){
+            System.out.println("Product name: " + search_output2.getName());
+            System.out.println("Product ID: " +search_output2.getUID());
+            System.out.println("Product Singer: " +search_output2.getSinger());
+            System.out.println("Product Duration: " +search_output2.getDuration());
+            System.out.println("Product Genre: " +search_output2.getGenre());
+            System.out.println("Product Release Year: " +search_output2.getReleaseYear());
+            System.out.println("Product Cost: " +search_output2.getCost());
+          }
+          else{
+            System.out.println("There are no Products with this ID.");
+          }
+        }
+  
+        else if(i == 3){
+        	System.out.println(products_name.inOrderString().toString()+"\n");
+        }
+  
+        else if(i == 4){
+        	System.out.println(products_id.inOrderString().toString()+"\n");
+          
+        }
+  				
+  
+  			}

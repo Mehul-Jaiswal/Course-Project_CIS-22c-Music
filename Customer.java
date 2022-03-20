@@ -6,8 +6,8 @@ public class Customer extends User {
 	private String city;
 	private String state;
 	private String zip;
-	//private LinkedList<Order> shippedOrders;
-	//private LinkedList<Order> unshippedOrders;
+	private LinkedList<Order> shippedOrders;
+	private LinkedList<Order> unshippedOrders;
 
 	
 	public Customer() {
@@ -20,6 +20,10 @@ public class Customer extends User {
 		state = null;
 		zip = null;
 	}
+
+  public Customer(String username) {
+		this.username = username;
+  }
 	
 	public Customer(String username, String password) {
 		this.username = username;
@@ -61,6 +65,38 @@ public class Customer extends User {
 	}
 	public void setZip(String newZip) {
 		zip = newZip;
+	}
+  public LinkedList<Order> getshippedOrders(){
+    return shippedOrders;
+  }
+  public LinkedList<Order> getunshippedOrders(){
+    return unshippedOrders;
+  }
+  public LinkedList<Order> setshippedOrders(new LinkedList<Order> so){
+    shippedOrders = so;
+  }
+  public LinkedList<Order> setunshippedOrders(new LinkedList<Order> uso){
+    unshippedOrders = uso;
+  }
+
+  @Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		else if (!(o instanceof Customer)) {
+			return false;
+		}
+		else {
+			Customer myCustomer = (Customer) o;
+			if (this.password.equals(myCustomer.password) && this.username.equals(myCustomer.username)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		
 	}
 	
 	@Override
