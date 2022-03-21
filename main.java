@@ -198,7 +198,7 @@ class main {
 						String entered_username = input.nextLine();
 						System.out.println("Enter password: ");
 						String entered_password = input.nextLine();
-						System.out.println("--------------------------------------------");
+						
 
 						if (employeeTable.find(new Employee(entered_username, entered_password)) == null) {
 							System.out.println(
@@ -206,6 +206,7 @@ class main {
 						} else {
 							userLoggedIn = employeeTable.find(new Employee(entered_username, entered_password));
 							if (((Employee) userLoggedIn).getIsManager()) {
+								System.out.println("--------------------------------------------");
 								System.out.print("Successful Manager Login. Welcome Back, "
 										+ userLoggedIn.getFirstName() + "!\n");
 								employeeMenuOnline = true;
@@ -213,6 +214,7 @@ class main {
 								loginSuccessful = true;
 
 							} else {
+								System.out.println("--------------------------------------------");
 								System.out.print("Successful Employee Login. Welcome Back, "
 										+ userLoggedIn.getFirstName() + "!\n");
 							}
