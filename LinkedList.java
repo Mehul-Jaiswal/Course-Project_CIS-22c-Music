@@ -392,18 +392,7 @@ public class LinkedList<T> {
        StringBuilder result = new StringBuilder();
        Node temp = first;
        while(temp != null) {
-    	   
-    	   
-    	   //result.append("[");
-    	   
-    	   result.append(temp.data + "\n");
-    	   
-    	   //result.append("]");
-    	   
-    	   //if (temp.prev != null && temp.next != null) {
-    		//   result.append("[");
-    	   //}
-    	   
+    	   result.append(temp.data + "\n");   
     	   temp = temp.next;
        }
        return result.toString();

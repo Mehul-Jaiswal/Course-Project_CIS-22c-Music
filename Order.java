@@ -180,6 +180,13 @@ public class Order {
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
+	
+	@Override
+	public String toString() {
+		return "Order ID: " + orderID + 
+				"\nDate Ordered: " + date +
+				"\nProducts: " + orderContents.toString();
+	}
 		
 	
 

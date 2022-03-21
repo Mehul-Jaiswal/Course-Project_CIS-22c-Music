@@ -175,9 +175,9 @@ class main {
   			if (userInput.equals("1")) {  //THEY ARE LOGGIN IN AS CUSTOMER 
           while (!loginSuccessful) {
             System.out.println("Enter username: ");
-    				String entered_username = input.next();
+    				String entered_username = input.nextLine();
     				System.out.println("Enter password: ");
-    				String entered_password = input.next();
+    				String entered_password = input.nextLine();
     				
     				if (customerTable.find(new Customer(entered_username, entered_password)) == null) {
   						System.out.println("We could not find an account with that username/password. Please try again below!");
@@ -189,6 +189,8 @@ class main {
   						customerMenuOnline = true;
   						
   						
+  						
+  						
               
   					}
           }
@@ -198,9 +200,9 @@ class main {
   			while (!loginSuccessful) {
   				
   			System.out.println("Enter username: ");
- 			String entered_username = input.next();
+ 			String entered_username = input.nextLine();
  			System.out.println("Enter password: ");
- 			String entered_password = input.next();
+ 			String entered_password = input.nextLine();
   				
             if (employeeTable.find(new Employee(entered_username, entered_password)) == null) {
   						System.out.println("We could not find an account with that username/password. Please try again below!");
@@ -217,6 +219,8 @@ class main {
   					}
           }
 
+          } else {
+        	  System.out.println("Invalid option! 223");
           }
       } 
       else if (userInput.equals("3")) { //THEY ARE EXITING
@@ -245,12 +249,13 @@ class main {
       
           System.out.println("Enter Q to Quit");
           
-  			userInput = input.nextLine();
+      
+  		userInput = input.nextLine();
           
           if(userInput.equals("1")) {
             System.out.println("Please Enter the Product Name to Search");
-      			String in = input.next();
-      			Product search_output = products_name.searchByName(new Product(in), new CompareByName());
+      			userInput = input.nextLine();
+      			Product search_output = products_name.searchByName(new Product(userInput), new CompareByName());
       			if (search_output != null) {
       				System.out.println("Product name: " + search_output.getName());
       				System.out.println("Product ID: " + search_output.getUID());
@@ -258,7 +263,7 @@ class main {
       				System.out.println("Product Duration: " + search_output.getDuration());
       				System.out.println("Product Genre: " + search_output.getGenre());
       				System.out.println("Product Release Year: " + search_output.getReleaseYear());
-      				System.out.println("Product Cost: $" + search_output.getCost());
+      				System.out.println("Product Cost: $" + search_output.getCost() +"\n");
       			} else {
       				System.out.println("There are no Products with this name.");
       			}
@@ -268,6 +273,7 @@ class main {
            if (userInput.equals("2")) {
             System.out.println("Please Enter the Product ID to Search");
             Double in = input.nextDouble();
+            input.nextLine();
         	Product search_output2 = products_id.searchByID(new Product(in), new CompareByID());
         			if (search_output2 != null) {
         				System.out.println("Product name: " + search_output2.getName());
@@ -276,7 +282,7 @@ class main {
         				System.out.println("Product Duration: " + search_output2.getDuration());
         				System.out.println("Product Genre: " + search_output2.getGenre());
         				System.out.println("Product Release Year: " + search_output2.getReleaseYear());
-        				System.out.println("Product Cost: $" + search_output2.getCost());
+        				System.out.println("Product Cost: $" + search_output2.getCost() + "\n");
         			} else {
         				System.out.println("There are no Products with this ID.");
         			}
@@ -295,7 +301,10 @@ class main {
             boolean orderingActive = true;
             while (orderingActive) {
                 System.out.println("Type the name of the product you would like, or Q if you are done: ");
-              String nameOfProduct = input.next();
+              String nameOfProduct = input.nextLine();
+              
+
+              //System.out.println("Name of product is " + nameOfProduct);
               
               Product orderedProduct = products_name.searchByName(new Product(nameOfProduct), new CompareByName()); 
               orderID++;
@@ -308,16 +317,16 @@ class main {
               
               if (orderedProduct != null) {
                 productList.addLast(orderedProduct);
-                System.out.println("Added " + nameOfProduct + " to your order.");
-              } else if (orderedProduct == null && nameOfProduct != "Q") {
+                System.out.println("Added " + orderedProduct.getName() + " to your order: " + orderedProduct.toString());
+              } else if (orderedProduct == null && !nameOfProduct.equalsIgnoreCase("Q")) {
                 System.out.println("Please enter a valid product name.");
                 
               } else {
-                System.out.print("This is your order: ");
-                //System.out.print(productList.toString());
+                System.out.println("This is your order: ");
+                System.out.println(productList.toString());
 
                 while (true) {
-                  System.out.println("Would you like to ship this order? Y/N");
+                  System.out.println("Confirm your order? N will bring you back to menu. Y/N");
                   userInput = input.nextLine();
                   int shippingSpeed = 1;
                   if (userInput.equalsIgnoreCase("Y")) {
@@ -339,6 +348,9 @@ class main {
                     }
                     
                     Order customerOrder = new Order(orderID, (Customer) userLoggedIn, strDate, productList, shippingSpeed);
+                    ((Customer) userLoggedIn).getunshippedOrders().addLast(customerOrder);
+                    
+                    System.out.println("Order confirmed!");
                     orderingActive = false;
                     break;
                     
@@ -352,6 +364,7 @@ class main {
                    
                   }
                 }
+                }
               
                 
               
@@ -359,8 +372,17 @@ class main {
               
             
           
-            
-		}	
+          } else if (userInput.equals("6")) {
+           Customer tempcust = (Customer) userLoggedIn;
+        	  
+        	  System.out.println("Shipped Orders: ");
+           System.out.println((tempcust.getshippedOrders().toString()));
+           System.out.println("Ushipped Orders: ");
+           System.out.println((tempcust.getunshippedOrders().toString()));
+		}	else {
+			System.out.println("Invalid option! 376");
+		}
+    }
 
 	while(employeeMenuOnline||managerMenuOnline){
 		System.out.println("Logged in as " + userLoggedIn.getUsername() + ": Employee Menu");
@@ -380,7 +402,7 @@ class main {
 		System.out.println("Q. Quit \n");
 
 		System.out.println("Select an option: ");
-
+		
 		userInput = input.nextLine();
 		if (userInput.equals("1")) {
 			System.out.println("Enter order ID: ");
@@ -444,21 +466,24 @@ class main {
 
 		} else if (managerMenuOnline && userInput.equals("6")) {
 			System.out.println("Product name: ");
-            String name = input.next();
+            String name = input.nextLine();
             System.out.println("UID: ");
             double UID = input.nextDouble();
+            input.nextLine();
             System.out.println("Singer: ");
-            String singer = input.next();
+            String singer = input.nextLine();
             System.out.println("Song duration: ");
             double duration = input.nextDouble();
+            input.nextLine();
             System.out.println("Genre: ");
-            String genre = input.next();
+            String genre = input.nextLine();
             System.out.println("Release Year: ");
-            String release_year = input.next();
+            String release_year = input.nextLine();
             System.out.println("Cost: ");
             Double cost = input.nextDouble();
+            input.nextLine();
             System.out.println("Number in stock: ");
-            String numInStock = input.next();
+            String numInStock = input.nextLine();
             Product newProduct =  new Product(name, UID, singer, cost, duration, release_year, genre, numInStock);
             products_name.insert(newProduct, new CompareByName());
             System.out.println(products_name.inOrderString().toString() + "\n");
@@ -499,7 +524,7 @@ class main {
 			userLoggedIn = null;
 
 		} else {
-			System.out.println("Invalid option!");
+			System.out.println("Invalid option! Line 517");
 		}
 
 	}

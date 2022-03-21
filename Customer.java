@@ -11,6 +11,10 @@ public class Customer extends User {
 
 	
 	public Customer() {
+		
+		shippedOrders = new LinkedList<Order>();
+		unshippedOrders = new LinkedList<Order>();
+		
 		firstName = null;
 		lastName = null;
 		username = null;
@@ -22,20 +26,30 @@ public class Customer extends User {
 	}
 
   public Customer(String username) {
+	  
+	  shippedOrders = new LinkedList<Order>();
+	 unshippedOrders = new LinkedList<Order>();
 		this.username = username;
   }
   
   public Customer(String firstName, String lastName, boolean c) {
+	  shippedOrders = new LinkedList<Order>();
+		unshippedOrders = new LinkedList<Order>();
 	  this.firstName = firstName;
 	  this.lastName= lastName;
   }
 	
 	public Customer(String username, String password) {
+		shippedOrders = new LinkedList<Order>();
+		unshippedOrders = new LinkedList<Order>();
 		this.username = username;
 		this.password = password;
 	}
 	
 	public Customer(String firstName, String lastName, String username, String password, String address, String city, String state, String zip) {
+		
+		shippedOrders = new LinkedList<Order>();
+		unshippedOrders = new LinkedList<Order>();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
