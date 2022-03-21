@@ -175,6 +175,7 @@ class main {
 						String entered_username = input.nextLine();
 						System.out.println("Enter password: ");
 						String entered_password = input.nextLine();
+						System.out.println("--------------------------------------------");
 
 						if (customerTable.find(new Customer(entered_username, entered_password)) == null) {
 							System.out.println(
@@ -197,6 +198,7 @@ class main {
 						String entered_username = input.nextLine();
 						System.out.println("Enter password: ");
 						String entered_password = input.nextLine();
+						System.out.println("--------------------------------------------");
 
 						if (employeeTable.find(new Employee(entered_username, entered_password)) == null) {
 							System.out.println(
