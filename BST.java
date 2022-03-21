@@ -1,5 +1,6 @@
+
 /**
- * Product.java
+ * BST.java
  * 
  * @author Mehul Jaiswal 
  * CIS 22C, course project Team 1
@@ -480,7 +481,7 @@ public class BST<Product> {
 	public String inOrderString() {
 		StringBuilder str = new StringBuilder();
 		inOrderString(root, str);
-		return str.append("\n").toString();
+		return str.append("").toString();
 	}
 
 	/**
