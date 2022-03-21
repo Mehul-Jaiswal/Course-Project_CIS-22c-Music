@@ -217,7 +217,9 @@ class main {
 						}
 
 					}
-				} 
+				} else {
+					System.out.println("Invalid option! Taking you back to the main menu...\n");
+				}
 			} else if (userInput.equals("3")) { // THEY ARE EXITING
 				// write all files
 				// exit
