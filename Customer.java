@@ -26,6 +26,7 @@ public class Customer extends User {
 	}
 
   public Customer(String username) {
+	  	
 	  shippedOrders = new LinkedList<Order>();
 		unshippedOrders = new LinkedList<Order>();
 	  
