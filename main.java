@@ -352,6 +352,8 @@ class main {
 									priorityQueue.insert(customerOrder, new priorityComparator1());
 									System.out.println("Order confirmed!");
 									orderingActive = false;
+									customerOrder = null;
+									orderedProduct = null;
 									break;
 
 								} else if (userInput.equalsIgnoreCase("N")) {
@@ -373,7 +375,7 @@ class main {
 
 					System.out.println("Shipped Orders: ");
 					System.out.println((tempcust.getshippedOrders().toString()));
-					System.out.println("Ushipped Orders: ");
+					System.out.println("Unshipped Orders: ");
 					System.out.println((tempcust.getunshippedOrders().toString()));
 				} else if (userInput.equals("Q")) {
 					customerMenuOnline = false;
@@ -495,10 +497,10 @@ class main {
 						System.out.println(products_name.inOrderString().toString() + "\n");
 
 					} else if (managerMenuOnline && userInput.equals("7")) {
-						System.out.println("Enter the product id you would like to update: ");
-						double in = input.nextDouble();
-						input.nextLine();
-						Product toUpdate = products_name.searchByID(new Product(in), new CompareByID());
+						System.out.println("Enter the product name you would like to update: ");
+						String in = input.nextLine();
+						Product toUpdate = products_name.searchByName(new Product(in), new CompareByName());
+						System.out.println(toUpdate.toString());
 						System.out.println("Enter 1 to update the cost: ");
 						System.out.println("Enter 2 to update the number in stock: ");
 						int in2 = input.nextInt();
@@ -506,6 +508,7 @@ class main {
 						if (in2 == 1) {
 							System.out.println("Enter the cost amount to update");
 							double coost = input.nextDouble();
+							input.nextLine();
 							toUpdate.setCost(coost);
 						}
 						if (in2 == 2) {
