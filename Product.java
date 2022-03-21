@@ -1,3 +1,4 @@
+
 /**
  * Product.java
  * 
@@ -48,6 +49,17 @@ public class Product {
 		this.UID = UID;
 	}
 	
+//	public Product(String UID, String name, double cost, String singer, double duration, String release_year,
+//			String genre, String numInStock) {
+//		this.name = name;
+//		this.UID = UID;
+//		this.duration = duration;
+//		this.singer = singer;
+//		this.cost = cost;
+//		this.genre = genre;
+//		this.release_year = release_year;
+//		this.numInStock = numInStock;
+//	}
 
 	/**
 	 * Accesses the Release Year of the Product
