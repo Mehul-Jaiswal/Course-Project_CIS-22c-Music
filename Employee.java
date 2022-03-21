@@ -31,6 +31,33 @@ public class Employee extends User{
 		isManager = true;
 	}
 	
+	public String toString() {
+		String result = isManager + ", " + firstName + ", " + lastName + ", " + username + ", " + password;
+		
+		
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		else if (!(o instanceof Employee)) {
+			return false;
+		}
+		else {
+			Employee myEmployee = (Employee) o;
+			if (this.password.equals(myEmployee.password) && this.username.equals(myEmployee.username)) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		
+	}
+	
 	@Override
 	public int hashCode() {
 		String key = username + password; //define key for this class
