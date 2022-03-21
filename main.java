@@ -596,7 +596,7 @@ class main {
 			e1.printStackTrace();
 		}
 		PrintWriter filewriter = new PrintWriter(output);
-		filewriter.println(products_name.inOrderString());
+		filewriter.print(products_name.inOrderString());
 
 		try {
 			output.close();
