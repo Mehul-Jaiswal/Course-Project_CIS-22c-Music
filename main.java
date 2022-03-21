@@ -51,7 +51,7 @@ class main {
 		Boolean loginSuccessful = false;
 		String userInput;
 
-		System.out.println("Welcome to Our Music Store!");
+		System.out.println("\n\nWelcome to Our Music Store!");
 		while (userLoggedIn == null) {
 			System.out.println("Enter 1 to Create Account");
 			System.out.println("Enter 2 to Login");
@@ -154,6 +154,8 @@ class main {
 						input_address, input_city, input_state, input_zip));
 				userLoggedIn = new Customer(input_firstName, input_lastName, input_username, input_password,
 						input_address, input_city, input_state, input_zip);
+				
+				System.out.println("--------------------------------------------");
 
 				System.out.println("Successful Customer Creation and Login. Welcome, "
 						+ customerTable.find(new Customer(input_username, input_password)).getFirstName() + "!\n");
