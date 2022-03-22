@@ -1,4 +1,7 @@
-
+/*Customer.java
+ * @author Ran Bar-Niv
+ * @author Tian Hong Zhu Zhou
+ */
 
 public class Customer extends User {
 	
