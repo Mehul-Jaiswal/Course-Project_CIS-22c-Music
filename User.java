@@ -1,3 +1,7 @@
+/* User.java
+ * @author Ran
+ * @author Tian
+ */
 
 public abstract class User {
 	
