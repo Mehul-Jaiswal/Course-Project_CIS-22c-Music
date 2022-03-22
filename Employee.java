@@ -1,4 +1,7 @@
-
+/* Employee.java
+ * @author Ran Bar-Niv
+ * @author Tian Hong Zhu Zhou
+ */
 public class Employee extends User{
 
 	private boolean isManager;
